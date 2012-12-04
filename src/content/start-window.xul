@@ -5,30 +5,28 @@
     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <!--<script src="file:///home/comradefuzz/mozilla-release/obj-ff-dbg/extensions/Tabulation/src/content/test-script.js"></script>-->
-
-<menubar id="main-menubar">
-  <menu id="tabularity-menu" label="Tabularity"
-   insertafter="helpMenu">
-    <menupopup>
-      <menuitem id="tabularity-menu-item"
+  <menubar id="main-menubar">
+    <menu id="tabularity-menu" label="Tabularity"
+    insertafter="helpMenu">
+      <menupopup>
+        <menuitem id="tabularity-menu-item"
         label="Start"
-        observes="viewTabularitySidebar"
-        />
-    </menupopup>
-  </menu>
-</menubar>
+        observes="viewTabularitySidebar" />
+      </menupopup>
+    </menu>
+  </menubar>
 
-<vbox id="appmenuSecondaryPane">
-  <menu id="tabularity-menu-2" label="Tabularity"
-    insertafter="appmenu_addons">
-    <menuitem id="tabularity-menu-item"
-        label="Start"
-        observes="viewTabularitySidebar"
-        />
-    </menupopup>
-  </menu>
-</vbox>
-
+  <vbox id="appmenuSecondaryPane">
+    <menu id="tabularity-menu-2" label="Tabularity"
+      insertafter="appmenu_addons">
+      <menupopup>
+         <menuitem id="tabularity-menu-item"
+          label="Start"
+          observes="viewTabularitySidebar" />
+      </menupopup>
+    </menu>
+  </vbox>
+  
   <broadcasterset id="mainBroadcasterSet"> 
     <broadcaster id="viewTabularitySidebar" 
                  label="Tabularity"
@@ -39,4 +37,5 @@
                  sidebartitle="Tabularity"
                  oncommand="toggleSidebar('viewTabularitySidebar');" />
   </broadcasterset>
+  
 </overlay>

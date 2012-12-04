@@ -5,7 +5,7 @@
 
 <?xml-stylesheet href="chrome://tabularity/skin/tabulation.css" type="text/css" ?>
             
-    <page>
+    <page id="tabulationSidebar" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
         <box id="tabulation-sidebar-info" style="display:block;positon:fixed">    		
             <h1 id="tabulation-h" class="block-me">Tabulation</h1>
             <vbox id="tabulation-sidebar-sub-info">
