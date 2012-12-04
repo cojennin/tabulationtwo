@@ -1,0 +1,5 @@
+content   tabularity                content/
+skin      tabularity  classic/1.0   skin/
+locale    tabularity  en-US         locale/en-US/
+
+overlay chrome://browser/content/browser.xul  chrome://tabularity/content/start-window.xul

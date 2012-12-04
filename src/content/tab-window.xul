@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/global.css"  type="text/css"?>
+<?xml-stylesheet href="file:///home/comradefuzz/mozilla-release/obj-ff-dbg/extensions/Tabulation/src/skin/tabulation.css"  type="text/css" ?>
+	<overlay id="tabularity-browser-overlay"
+    	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    	<vbox id="tabulation-sidebar-info" style="display:block">
+    		<h1 id="tabulation-h">Tabulation</h1>
+    		<vbox id="tabulation-sidebar-sub-info">
+    			<h2 class="large-header-bold standard-font">Document title:</h2>
+                <h3 id="tabulation-doc-name" class="standard-font indent-left"></h3>
+    		</vbox>
+    	</vbox>
+    	<script src="file:///home/comradefuzz/mozilla-release/obj-ff-dbg/extensions/Tabulation/src/content/jquery-1.8.3.min.js"></script>
+    	<script src="file:///home/comradefuzz/mozilla-release/obj-ff-dbg/extensions/Tabulation/src/content/sidebar.js"></script>
+    </overlay>
