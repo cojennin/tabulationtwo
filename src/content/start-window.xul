@@ -4,7 +4,7 @@
   <overlay id="tabularity-browser-overlay"
     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <script src="file:///home/comradefuzz/mozilla-release/obj-ff-dbg/extensions/Tabulation/src/content/test-script.js"></script>
+  <!--<script src="file:///home/comradefuzz/mozilla-release/obj-ff-dbg/extensions/Tabulation/src/content/test-script.js"></script>-->
 
 <menubar id="main-menubar">
   <menu id="tabularity-menu" label="Tabularity"
@@ -12,7 +12,8 @@
     <menupopup>
       <menuitem id="tabularity-menu-item"
         label="Start"
-        oncommand="document.loadOverlay('chrome://tabularity/content/tab-window.xul', null);" />
+        observes="viewTabularitySidebar"
+        />
     </menupopup>
   </menu>
 </menubar>
@@ -20,11 +21,22 @@
 <vbox id="appmenuSecondaryPane">
   <menu id="tabularity-menu-2" label="Tabularity"
     insertafter="appmenu_addons">
-    <menupopup>
-      <menuitem id="tabularity-menu-item-2"
+    <menuitem id="tabularity-menu-item"
         label="Start"
-        oncommand="document.loadOverlay('chrome://tabularity/content/tab-window.xul', null);" />
+        observes="viewTabularitySidebar"
+        />
     </menupopup>
   </menu>
 </vbox>
+
+  <broadcasterset id="mainBroadcasterSet"> 
+    <broadcaster id="viewTabularitySidebar" 
+                 label="Tabularity"
+                 autoCheck="false"
+                 type="checkbox"
+                 group="sidebar"
+                 sidebarurl="chrome://tabularity/content/tab-window.xul"
+                 sidebartitle="Tabularity"
+                 oncommand="toggleSidebar('viewTabularitySidebar');" />
+  </broadcasterset>
 </overlay>

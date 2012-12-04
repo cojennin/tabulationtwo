@@ -7,8 +7,6 @@
 
 		function TabulationTabListener(){
 			var sidebar_h3 = $("#tabulation-doc-name");
-			alert(gBrowser.browsers.length);
-			console.log(tab_browser);
 			if(document.title){
 				sidebar_h3.text(document.title);
 				console.log(sidebar_h3.html());

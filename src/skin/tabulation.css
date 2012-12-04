@@ -7,3 +7,6 @@
 
 .standard-font{font-family: Georgia, "Times New Roman", Times, serif;}
 .indent-left{padding-left:5px;}
+
+/* Support CSS */
+.block-me{display:block;}
