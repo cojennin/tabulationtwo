@@ -37,5 +37,8 @@
                  sidebartitle="Tabularity"
                  oncommand="toggleSidebar('viewTabularitySidebar');" />
   </broadcasterset>
+
+   <script src="chrome://tabularity/content/jquery-1.8.3.min.js"></script>
+    <script src="chrome://tabularity/content/singleton.js"></script>
   
 </overlay>

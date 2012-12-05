@@ -6,16 +6,15 @@
 <?xml-stylesheet href="chrome://tabularity/skin/tabulation.css" type="text/css" ?>
             
     <page id="tabulationSidebar" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
-        <box id="tabulation-sidebar-info" style="display:block;positon:fixed">    		
-            <h1 id="tabulation-h" class="block-me">Tabulation</h1>
+        <vbox id="tabulation-sidebar-info" style="display:block;positon:fixed">    		
             <vbox id="tabulation-sidebar-sub-info">
             	<h2 class="large-header-bold standard-font">Document title:</h2>
                 <h3 id="tabulation-doc-name" class="standard-font indent-left"></h3>
             </vbox>
-        </box>
+        </vbox>
         <!--<script src="file:///home/comradefuzz/mozilla-release/obj-ff-dbg/extensions/Tabulation/src/content/jquery-1.8.3.min.js"></script>
         <script src="file:///home/comradefuzz/mozilla-release/obj-ff-dbg/extensions/Tabulation/src/content/sidebar.js"></script>-->
-        <script src="chrome://tabularity/src/content/jquery-1.8.3.min.js"></script>
+        <script src="chrome://tabularity/content/jquery-1.8.3.min.js"></script>
         <script src="chrome://tabularity/content/sidebar.js"></script>
     </page>
 
