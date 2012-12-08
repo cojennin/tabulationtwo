@@ -1,4 +1,3 @@
-var tab_open_management;
 
 var mainDocWindow =  window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
         	.getInterface(Components.interfaces.nsIWebNavigation)
@@ -90,15 +89,8 @@ tabListManager = {
 	addLinkToList: function(){
 		//Check if anything is in the input field
 		var link_to_add = document.getElementById('tabulation-link-to-add');
-		//If we have text
-		//if(link_to_add.innerHTML){
-			//If it doesn't already exist in our list
-		//	if(!curr_links[link_to_add]){
-
 		this.list_of_links.appendItem(link_to_add.value, link_to_add.value);
-		curr_links.push(link_to_add.value);
-		//	}
-		//}
+		link_to_add.value = "";
 	},
 	removeLinkFromList: function(){
 		var count = this.list_of_links.selectedCount;
