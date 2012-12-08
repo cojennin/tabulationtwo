@@ -40,13 +40,13 @@ function tabTracker(){
 //Therefore, need a constant to determine if the updateTabsChanged event should occur
 //if the open/close events have already occured
 tabTracker.prototype.updateTabsChanged = function(event){
-	tab_observer.number_of_pages_viewed += 1;
 	tab_observer.total_number_of_times_tab_has_been_switched += 1;
+	tab_observer.is_tab_selected_after_open = true;
 }
 
 tabTracker.prototype.updateTabsOpened = function(event){
-	tab_observer.number_of_tabs_opened += 1;
-	tab_observer.total_number_of_tabs_closed_during_session += 1;
+	tab_observer.total_number_of_tabs_opened_during_session += 1;
+	tab_observer.is_opening_tab = true;
 }
 
 tabTracker.prototype.updateTabsClosed = function(event){

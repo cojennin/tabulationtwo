@@ -83,6 +83,17 @@ function tabulationPageLoad(event) {
       return;
     }
 
+    /* Tab + page load check */
+    if(!is_opening_tab){
+      tab_observer.number_of_pages_viewed += 1;
+    }
+    else if(is_opening_tab && tab_observer.is_tab_selected_after_open){
+      tab_observer.is_tab_selected_after_open = false;
+      tab_observer.is_opening_tab = false
+      tab_observer.number_of_pages_viewed += 1;
+
+    }
+
     if(typeof page_tracker == 'undefined'){
       page_tracker = new pageTracker();
       page_tracker.addPage(win)
