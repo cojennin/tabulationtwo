@@ -1,13 +1,16 @@
 
-
-	function TabulationTabListener(){
-		//Access gBrowser from within our sidebar
-		this.tabMainWindow = window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+var mainDocWindow =  window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
         	.getInterface(Components.interfaces.nsIWebNavigation)
             .QueryInterface(Components.interfaces.nsIDocShellTreeItem)
             .rootTreeItem
             .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
             .getInterface(Components.interfaces.nsIDOMWindow);
+
+
+
+	function TabulationTabListener(mainWindow){
+		//Access gBrowser from within our sidebar
+		this.tabMainWindow = mainWindow;
 
         	this.tabulation_tabs = this.tabMainWindow.gBrowser.tabulation_observer;
         	this.curr_gBrowser = this.tabMainWindow.gBrowser;
@@ -50,7 +53,46 @@
 		this.tabMainWindow.console.log(msg);
 	}
 
-var tab_listener = new TabulationTabListener();
+//Is a check needed here to see if tab_listener is defined?
+var tab_listener = new TabulationTabListener(mainDocWindow);
 tab_listener.updateDocTitle();
 tab_listener.currentlyOpenedTabs();
 tab_listener.updateNumTimesOpened();
+
+if(in_session_links == "undefined")
+	var in_session_links = {};
+
+//See if jQuery support is available.
+$(document).ready(function(){
+	//Get browser url for reference
+	var temp_g_browser = this.mainDocWindow.gBrowser;
+	var curr_url = contentDocument.URL;
+	var curr_links;
+
+	//In this session, have we already added links 
+	//to be opened the next time this page is loaded?
+	if(curr_url in in_session_links)
+		curr_links = session_links[curr_url];
+	else
+		curr_links = [];
+
+	var list_of_links = mainDocWindow.getElementById('tabulaton-link-list');
+
+	//Append links that already exist to listbox
+	for(var link in curr_links){
+		list_of_links.appendItem(curr_links[link], curr_links[link]);
+	}
+
+	$('#tabulation-link-to-add').click(function(){
+		//Check if anything is in the input field
+		var link_to_add = $('#tabulation-add-link-button').text();
+		//If we have text
+		if(link_to_add){
+			//If it doesn't already exist in our list
+			if(!curr_links[link_to_add]){
+				list_of_links.appendItem(link_to_add, link_to_add);
+				curr_links.push(link_to_add);
+			}
+		}
+	});
+}
