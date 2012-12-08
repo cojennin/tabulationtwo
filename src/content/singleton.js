@@ -6,7 +6,6 @@ var page_tracker;
 function pageTracker(){
   //This will have to be merged with the tab tracker
   //***Someone could switch tabs and not re-load***
-  this.how_many_pages_viewed_in_this_session = 0;
   //Keep all tabs that we're opened during this session.
   this.tabs_currently_opened = {}; 
   this.tabs_closed = {};
@@ -25,8 +24,8 @@ pageTracker.prototype.addPage = function(page_window){
   var curr_url;
   for(url in browsers_open_with_session){
     curr_url = browsers_open_with_session[url];
-    if (curr_url in this.tabs_currently_opened) {
-      var temp_tab_obj = this.tabs_currently_opened[curr_url];
+    if (curr_url in tab_observer.pages_in_session) {
+      var temp_tab_obj = tab_observer.pages_in_session[curr_url];
       temp_tab_obj.number_times_accessed_in_session += 1;
 
       var temp_avg_number_tabs_open = this.tabs_currently_opened[curr_url].avg_number_tabs_open_during_session;
@@ -34,7 +33,7 @@ pageTracker.prototype.addPage = function(page_window){
       temp_tab_obj.avg_number_tabs_open_during_session = temp_avg_number_tabs_open;
     }
     else {
-      this.tabs_currently_opened[curr_url] = {
+      tab_observer.pages_in_session[curr_url] = {
         id: url,
         number_times_accessed_in_session: 0,
         avg_number_tabs_open_during_session: [gBrowser.browsers.length]
@@ -83,7 +82,7 @@ function tabulationPageLoad(event) {
       //Listen once to create tabTracker, then die
       return;
     }
-    alert("pageEvent");
+
     if(typeof page_tracker == 'undefined'){
       page_tracker = new pageTracker();
       page_tracker.addPage(win)

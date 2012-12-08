@@ -9,7 +9,7 @@
             .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
             .getInterface(Components.interfaces.nsIDOMWindow);
 
-        	this.tabulation_tabs = this.tabMainWindow.gBrowser.tabulation_page_object;
+        	this.tabulation_tabs = this.tabMainWindow.gBrowser.tabulation_observer;
         	this.curr_gBrowser = this.tabMainWindow.gBrowser;
 	}
 
@@ -35,7 +35,7 @@
 		//accurate count of all browsers. Also will need to update on browser change
 		var curr_opened_tabs = $('#currently-opened-tabs');
 		if(this.tabulation_tabs.how_many_tabs_opened_in_this_session)
-			curr_opened_tabs.text(" " + this.tabulation_tabs.how_many_tabs_opened_in_this_session.toString());
+			curr_opened_tabs.text(" " + this.tabulation_tabs.total_number_of_tabs_opened_during_session);
 		else
 			curr_opened_tabs.text(" 0");
 	}

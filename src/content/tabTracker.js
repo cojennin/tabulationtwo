@@ -4,9 +4,12 @@ var tab_tracker;
 if(typeof tab_tracker == "undefined"){
 	tab_tracker = new tabTracker();
 	var tabulation_tabs = gBrowser.tabContainer;
-	tabulation_tabs.addEventListener("TabSelect", tab_tracker.updateTabsChanged, false);
-	tabulation_tabs.addEventListener("TabOpen", tab_tracker.updateTabsOpened, false);
-	tabulation_tabs.addEventListener("TabClose", tab_tracker.updateTabsClosed, false)
+	//In order for the callbacks to work, have inlined
+	//the function and made the call to tab_tracker explicitly
+	//Not sure if there is a better way to accomplish this
+	tabulation_tabs.addEventListener("TabSelect", function(e){tab_tracker.updateTabsChanged(e);}, false);
+	tabulation_tabs.addEventListener("TabOpen", function(e){tab_tracker.updateTabsOpened(e);}, false);
+	tabulation_tabs.addEventListener("TabClose", function(e){tab_tracker.updateTabsClosed(e);}, false)
 	
 	//Mail our data over to the sidebar
 	//gBrowser seems like a good universal way to share objects
@@ -16,30 +19,37 @@ if(typeof tab_tracker == "undefined"){
   	}
 }
 
-//Does this event fire on firefox (prior to page load?)?
-//At the moment, 
+//The creation of the tabTracker fires before the creation of the pageLoad event
 function tabTracker(){
-	alert("tabEvent")
 	//These are all independent of page load, but the
 	//how_many_pages_viewed_in_this_session will rely on the switch
 	//and new events
-	this.total_number_of_tabs_opened_during_session = 0;
-	this.total_number_of_tabs_closed_during_session = 0;
-	this.total_number_of_times_tab_has_been_switched = 0;
+	this.already_opened_or_closed = false;
 }
 
 /* Mainly setter functions for our variables. Could inline, but 
  * not sure if they'll be used later on. Leaving them as standalone 
  * for the moment.
  */
+
+
+//This event will trigger sometimes on open and close
+//When an explicity click on the tab creation button occurs
+//or a click on File->New Tab, this event will trigger
+//But, the open and close events occur before this event
+//Therefore, need a constant to determine if the updateTabsChanged event should occur
+//if the open/close events have already occured
 tabTracker.prototype.updateTabsChanged = function(event){
-	this.total_number_of_times_tab_has_been_switched += 1;
+	tab_observer.number_of_pages_viewed += 1;
+	tab_observer.total_number_of_times_tab_has_been_switched += 1;
 }
 
 tabTracker.prototype.updateTabsOpened = function(event){
-	this.total_number_of_tabs_closed_during_session += 1;
+	tab_observer.number_of_tabs_opened += 1;
+	tab_observer.total_number_of_tabs_closed_during_session += 1;
 }
 
 tabTracker.prototype.updateTabsClosed = function(event){
-	this.total_number_of_tabs_closed_during_session += 1;
+	alert("close")
+	tab_observer.total_number_of_tabs_closed_during_session += 1;
 }
