@@ -6,34 +6,33 @@ var tabulation_flat_table;
 if(tabulation_flat_table == "undefined"){
 	tabulation_flat_table = {
 		this.file_name: "tabulation_flat_table.txt",
-		this.tabulation_file_path: "",
+		this.tabulation_file: "",
 		initialize: function(){
-			var dir = DirIO.open("ProfD");
+			this.tabulation_file = DirIO.open("ProfD");
 			if (dir.exists()) {
-				file.append("extensions"); // extensions subfolder of profile directory
-				file.append("{ec8030f7-c20a-464f-9b0e-13a3a9e97384}");
+				this.tabulation_file.append("extensions"); // extensions subfolder of profile directory
+				try{
+					this.tabulation_file.append("{ec8030f7-c20a-464f-9b0e-13a3a9e97384}");
+				}
+				catch(e){
+					alert("Could not locate extension directory.");
+				}
+				this.tabulation_file.append("tabulation_flat.json");
+			}
+			else
+			{
+				alert("Could not locate preferences directory.")
+				return false;
 			}
 		},
-		writeToFile: function(){
-			Components.utils.import("resource://gre/modules/FileUtils.jsm");
-
-			var stream = FileOutputStream.openFileOutputStream(this.tabulation_file_path, FileUtils.MODE_WRONLY | FileUtils.MODE_CREATE);
-			stream.write(data, data.length);
-			stream.close();
-
+		writeToFile: function(json_str){
+			FileIO.write(this.tabulation_file, JSON.stringify(json_str));
 		},
 		readFromFile: function(){
-			var file = prefs.getComplexValue(this.file_name, Components.interfaces.nsILocalFile);
-			Components.utils.import("resource://gre/modules/NetUtil.jsm");
-			NetUtil.asyncFetch(file, function(inputStream, status) {
-			  if (!Components.isSuccessCode(status)) {
-			    alert("Error reading table.");
-			    return;
-			  }
-			  // The file data is contained within inputStream.
-			  // You can read it into a string with
-			  var data = NetUtil.readInputStreamToString(inputStream, inputStream.available());
-			});
+			var fileContents = FileIO.read(this.tabulation_file);
+			return tabulation_json = JSON.parse(fileContents);
 		}
 	}
+
+	tabulation_flat_tabl.initialize();
 }
