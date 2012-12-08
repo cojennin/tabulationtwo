@@ -6,7 +6,7 @@
 <?xml-stylesheet href="chrome://tabularity/skin/tabulation.css" type="text/css" ?>
             
     <page id="tabulationSidebar" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
-        <vbox id="tabulation-sidebar-info" style="display:block;positon:fixed">    		
+        <vbox id="tabulation-sidebar-info" flex="1">    		
             <vbox id="tabulation-sidebar-sub-info">
                 <div class="tabulation-content-block">
                 	<h3 class="indent-left make-inline">Document title: </h3>
@@ -21,10 +21,11 @@
 
                 <p style="margin-top:4px">The next time this page is loaded, open the following tabs: </p>
                 <vbox class="tabulation-content-block">
-                    <listbox id="tabulaton-link-list"></listbox>
+                    <listbox id="tabulaton-link-list" ></listbox>
                     <textbox id="tabulation-link-to-add" />
-                    <button id="tabulation-add-link-button" label="Add link" oncommand="" />
+                    <button id="tabulation-add-link-button" label="Add link" oncommand="tab_open_management.addLinkToList()" />
                     <button id="tabulation-delete-link-button" label="Delete button" />
+                    <button id="tabulation-add-all-links" label="Add all links from open tabs" />
                 </vbox>
 
             </vbox>
@@ -33,5 +34,6 @@
         <script src="file:///home/comradefuzz/mozilla-release/obj-ff-dbg/extensions/Tabulation/src/content/sidebar.js"></script>-->
         <script src="chrome://tabularity/content/jquery-1.8.3.min.js"></script>
         <script src="chrome://tabularity/content/sidebar.js"></script>
+        <!--<script src="chrome://tabularity/content/dragDropObserver.js"></script>-->
     </page>
 

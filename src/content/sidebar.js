@@ -1,3 +1,4 @@
+var tab_open_management;
 
 var mainDocWindow =  window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
         	.getInterface(Components.interfaces.nsIWebNavigation)
@@ -6,19 +7,12 @@ var mainDocWindow =  window.QueryInterface(Components.interfaces.nsIInterfaceReq
             .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
             .getInterface(Components.interfaces.nsIDOMWindow);
 
-
-
 	function TabulationTabListener(mainWindow){
 		//Access gBrowser from within our sidebar
 		this.tabMainWindow = mainWindow;
 
         	this.tabulation_tabs = this.tabMainWindow.gBrowser.tabulation_observer;
         	this.curr_gBrowser = this.tabMainWindow.gBrowser;
-	}
-
-	TabulationTabListener.prototype.logit = function(msg){
-		var doc_window = this.tabMainWindow;
-		doc_window.console.log(msg);
 	}
 
 	TabulationTabListener.prototype.updateDocTitle = function(){
@@ -49,50 +43,61 @@ var mainDocWindow =  window.QueryInterface(Components.interfaces.nsIInterfaceReq
 		$('#num-times-opened').text(" "+times_accessed.toString());
 	}
 
-	TabulationTabListener.prototype.logit = function(msg){
+	/*TabulationTabListener.prototype.logit = function(msg){
 		this.tabMainWindow.console.log(msg);
-	}
+	}*/
 
 //Is a check needed here to see if tab_listener is defined?
 var tab_listener = new TabulationTabListener(mainDocWindow);
 tab_listener.updateDocTitle();
-tab_listener.currentlyOpenedTabs();
-tab_listener.updateNumTimesOpened();
+//tab_listener.currentlyOpenedTabs();
+//tab_listener.updateNumTimesOpened();
 
-if(in_session_links == "undefined")
-	var in_session_links = {};
 
-//See if jQuery support is available.
-$(document).ready(function(){
+/* Object for handling addition of tabs to list of tabs to pne
+ * when opening url
+ */
+
+
+var tabListManager = {
+	
+	manageTabsToOpen: function(){
+	//See if jQuery support is available.
 	//Get browser url for reference
-	var temp_g_browser = this.mainDocWindow.gBrowser;
-	var curr_url = contentDocument.URL;
-	var curr_links;
+	this.temp_g_browser = this.mainDocWindow.gBrowser;
+	this.curr_url = contentDocument.URL;
+	this.curr_links;
 
-	//In this session, have we already added links 
-	//to be opened the next time this page is loaded?
-	if(curr_url in in_session_links)
-		curr_links = session_links[curr_url];
-	else
-		curr_links = [];
+	},
+	intializeLinksToDisplay: function(){
+		if(in_session_links == "undefined")
+			var in_session_links = {};
+		//In this session, have we already added links 
+		//to be opened the next time this page is loaded?
+		if(this.curr_url in in_session_links)
+			this.curr_url = session_links[curr_url];
+		else
+			this.curr_url = [];
 
-	var list_of_links = mainDocWindow.getElementById('tabulaton-link-list');
+		var list_of_links = mainDocWindow.getElementById('tabulaton-link-list');
 
-	//Append links that already exist to listbox
-	for(var link in curr_links){
-		list_of_links.appendItem(curr_links[link], curr_links[link]);
-	}
-
-	$('#tabulation-link-to-add').click(function(){
+		//Append links that already exist to listbox
+		for(var link in curr_links){
+			list_of_links.appendItem(curr_links[link], curr_links[link]);
+		}
+	},
+	addLinkToList: function(){
+		alert("link added");
 		//Check if anything is in the input field
-		var link_to_add = $('#tabulation-add-link-button').text();
+		var link_to_add = document.getElementById('tabulation-add-link-button');
+		alert(link_to_add);
 		//If we have text
-		if(link_to_add){
+		if(link_to_add.innerHTML){
 			//If it doesn't already exist in our list
 			if(!curr_links[link_to_add]){
 				list_of_links.appendItem(link_to_add, link_to_add);
-				curr_links.push(link_to_add);
+				curr_links.push(link_to_add.innerHTML);
 			}
 		}
-	});
+	}
 }
