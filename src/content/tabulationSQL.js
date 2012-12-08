@@ -2,22 +2,27 @@
 Components.utils.import("resource://gre/modules/NetUtil.jsm");
 Components.utils.import("resource://gre/modules/FileUtils.jsm");
 
-var tabulation_flat_table;
-if(tabulation_flat_table == "undefined"){
-	tabulation_flat_table = {
-		this.file_name: "tabulation_flat_table.txt",
-		this.tabulation_file: "",
-		initialize: function(){
-			this.tabulation_file = DirIO.open("ProfD");
+var tabulation_flat_table = {
+		initialize: function(file_name){
+			var dir = DirIO.get("ProfD");
+
 			if (dir.exists()) {
+				this.tabulation_file = dir;
 				this.tabulation_file.append("extensions"); // extensions subfolder of profile directory
 				try{
-					this.tabulation_file.append("{ec8030f7-c20a-464f-9b0e-13a3a9e97384}");
+					this.tabulation_file.append("tabulation");
 				}
 				catch(e){
 					alert("Could not locate extension directory.");
 				}
-				this.tabulation_file.append("tabulation_flat.json");
+				this.tabulation_file.append(file_name);
+
+				if(!this.tabulation_file.exists()){
+					alert("double_check existence");
+					if(!FileIO.create(this.tabulation_file)){
+					    throw Error("Failed to create earnings backup file");
+					}
+				}
 			}
 			else
 			{
@@ -25,14 +30,13 @@ if(tabulation_flat_table == "undefined"){
 				return false;
 			}
 		},
-		writeToFile: function(json_str){
-			FileIO.write(this.tabulation_file, JSON.stringify(json_str));
+		writeToFile: function(file_name, str_to_write){
+			this.initialize(file_name);
+			var failed = FileIO.write(this.tabulation_file, str_to_write);
 		},
-		readFromFile: function(){
-			var fileContents = FileIO.read(this.tabulation_file);
-			return tabulation_json = JSON.parse(fileContents);
+		readFromFile: function(file_name){
+			this.initialize(file_name);
+			var file_contents = FileIO.read(this.tabulation_file);
+			return file_contents;
 		}
 	}
-
-	tabulation_flat_tabl.initialize();
-}

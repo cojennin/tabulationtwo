@@ -8,7 +8,7 @@ var mainDocWindow =  window.QueryInterface(Components.interfaces.nsIInterfaceReq
 
 	function TabulationTabListener(mainWindow){
 		//Access gBrowser from within our sidebar
-		this.tabMainWindow = mainWindow;
+			this.tabMainWindow = mainWindow;
 
         	this.tabulation_tabs = this.tabMainWindow.gBrowser.tabulation_observer;
         	this.curr_gBrowser = this.tabMainWindow.gBrowser;
@@ -69,21 +69,35 @@ tabListManager = {
 	manageTabsToOpen: function(){
 		//See if jQuery support is available.
 		//Get browser url for reference
-		this.temp_g_browser = this.mainDocWindow.gBrowser;
-		this.curr_url = contentDocument.URL;
+		this.temp_g_browser = mainDocWindow.gBrowser;
+		this.curr_url = mainDocWindow.gBrowser.contentDocument.documentURI;
 		this.curr_links;
 	},
 	intializeLinksToDisplay: function(){
-		
-		var curr_browser = this.mainDocWindow.gBrowser;
-		var links_retrieved = JSON.parse(localStorage.getItem(curr_browser.documentURI));
+		var curr_browser = mainDocWindow.gBrowser;
+		var curr_url = curr_browser.contentDocument.documentURI;
+
+		var all_tabs = tabulation_flat_table.readFromFile("tabulation_tab_store.json");
+		var json_all_tabs;
+		try{
+			json_all_tabs = JSON.parse(all_tabs);
+		}
+		catch(e){
+			alert("error");
+			json_all_tabs = {};
+		}
+
 		//In this session, have we already added links 
 		//to be opened the next time this page is loaded?
-		if(links_retrieved){
+		try{
+			var temp_arry = json_all_tabs[curr_url];
 			//Append links that already exist to listbox
-			for(var link in links_retrieved){
-				this.list_of_links.appendItem(links_retrieved[link], links_retrieved[link]);
+			for(var link in temp_arry){
+				this.list_of_links.appendItem(temp_arry[link], temp_arry[link]);
 			}
+		}
+		catch(e){
+			alert("could not find array");
 		}
 	},
 	addLinkToList: function(){
@@ -118,12 +132,26 @@ tabListManager = {
 		var count = this.list_of_links.itemCount;
 		//Storge json like objects in local storage with the key being
 		//the url they're stored under.
-		var array_to_json = [];
-	
-		for(var i = 0; i < count; i++){
-			array_to_json.push(this.list_of_links.getItemAtIndex(i));
+		
+		var all_tabs = tabulation_flat_table.readFromFile("tabulation_tab_store.json");
+		var json_all_tabs;
+		try{
+			json_all_tabs = JSON.parse(all_tabs);
+		}
+		catch(e){
+			json_all_tabs = {};
 		}
 
-		localStorage.setItem(curr_url, JSON.stringify(array_to_json));
+		if(typeof json_all_tabs[curr_url] == "undefined"){
+			json_all_tabs[curr_url] = [];
+		}
+
+		for(var i = 0; i < count; i++){
+			json_all_tabs[curr_url][i] = this.list_of_links.getItemAtIndex(i).value;
+		}
+
+		tabulation_flat_table.writeToFile("tabulation_tab_store.json", JSON.stringify(json_all_tabs));
 	}
 }
+
+tabListManager.intializeLinksToDisplay();
