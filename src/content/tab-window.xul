@@ -23,9 +23,9 @@
                 <vbox class="tabulation-content-block">
                     <listbox id="tabulaton-link-list" ></listbox>
                     <textbox id="tabulation-link-to-add" />
-                    <button id="tabulation-add-link-button" label="Add link" oncommand="tab_open_management.addLinkToList()" />
-                    <button id="tabulation-delete-link-button" label="Delete button" />
-                    <button id="tabulation-add-all-links" label="Add all links from open tabs" />
+                    <button id="tabulation-add-link-button" label="Add link" oncommand="tabListManager.addLinkToList()" />
+                    <button id="tabulation-delete-link-button" label="Delete button" oncommand="tabListManager.removeLinkFromList()" />
+                    <button id="tabulation-add-all-links" label="Add all links from open tabs" oncommand="tabListManager.addAllLinksFromOpenBrowsers()" />
                 </vbox>
 
             </vbox>

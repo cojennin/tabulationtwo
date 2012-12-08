@@ -58,46 +58,80 @@ tab_listener.updateDocTitle();
  * when opening url
  */
 
+var tabListManager;
+if(tabListManager == "undefined"){
+	tabListManager = {};
+}
 
-var tabListManager = {
-	
+tabListManager = {
+
+	list_of_links: document.getElementById('tabulaton-link-list'), 
+
 	manageTabsToOpen: function(){
-	//See if jQuery support is available.
-	//Get browser url for reference
-	this.temp_g_browser = this.mainDocWindow.gBrowser;
-	this.curr_url = contentDocument.URL;
-	this.curr_links;
-
+		//See if jQuery support is available.
+		//Get browser url for reference
+		this.temp_g_browser = this.mainDocWindow.gBrowser;
+		this.curr_url = contentDocument.URL;
+		this.curr_links;
 	},
 	intializeLinksToDisplay: function(){
-		if(in_session_links == "undefined")
-			var in_session_links = {};
+		
+		var curr_browser = this.mainDocWindow.gBrowser;
+		var links_retrieved = JSON.parse(localStorage.getItem(curr_browser.documentURI));
 		//In this session, have we already added links 
 		//to be opened the next time this page is loaded?
-		if(this.curr_url in in_session_links)
-			this.curr_url = session_links[curr_url];
-		else
-			this.curr_url = [];
-
-		var list_of_links = mainDocWindow.getElementById('tabulaton-link-list');
-
-		//Append links that already exist to listbox
-		for(var link in curr_links){
-			list_of_links.appendItem(curr_links[link], curr_links[link]);
+		if(links_retrieved){
+			//Append links that already exist to listbox
+			for(var link in links_retrieved){
+				this.list_of_links.appendItem(links_retrieved[link], links_retrieved[link]);
+			}
 		}
 	},
 	addLinkToList: function(){
-		alert("link added");
 		//Check if anything is in the input field
-		var link_to_add = document.getElementById('tabulation-add-link-button');
-		alert(link_to_add);
+		var link_to_add = document.getElementById('tabulation-link-to-add');
 		//If we have text
-		if(link_to_add.innerHTML){
+		//if(link_to_add.innerHTML){
 			//If it doesn't already exist in our list
-			if(!curr_links[link_to_add]){
-				list_of_links.appendItem(link_to_add, link_to_add);
-				curr_links.push(link_to_add.innerHTML);
-			}
+		//	if(!curr_links[link_to_add]){
+
+		this.list_of_links.appendItem(link_to_add.value, link_to_add.value);
+		curr_links.push(link_to_add.value);
+		//	}
+		//}
+	},
+	removeLinkFromList: function(){
+		var count = this.list_of_links.selectedCount;
+		while (count--){
+			var item = this.list_of_links.selectedItems[0];
+		    this.list_of_links.removeItemAt(this.list_of_links.getIndexOfItem(item));
 		}
+	},
+	addAllLinksFromOpenBrowsers: function(){
+		var curr_browser = mainDocWindow.gBrowser;
+		var num = curr_browser.browsers.length;
+	  	for (var i = 0; i < num; i++) {
+	    	var b_urls = curr_browser.getBrowserAtIndex(i);
+	    	try {
+	      		//Loop through all open windows and push them to this array
+	      		this.list_of_links.appendItem(b_urls.currentURI.spec, b_urls.currentURI.spec);
+	    	} catch(e) {
+	      		Components.utils.reportError(e);
+	    	}
+	  	}
+	},
+	saveAllLinksInList: function(){
+		var curr_browser = mainDocWindow.gBrowser;
+		var curr_url = curr_browser.contentDocument.documentURI;
+		var count = this.list_of_links.itemCount;
+		//Storge json like objects in local storage with the key being
+		//the url they're stored under.
+		var array_to_json = [];
+	
+		for(var i = 0; i < count; i++){
+			array_to_json.push(this.list_of_links.getItemAtIndex(i));
+		}
+
+		localStorage.setItem(curr_url, JSON.stringify(array_to_json));
 	}
 }
