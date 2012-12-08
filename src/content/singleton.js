@@ -1,26 +1,46 @@
-
 //Keep track of everything that's going on in the browser;
 var page_tracker;
 
 //This is our session object
 //It will maintain all knowledge on current browsers, pages, pageLoad events, pageClose events
 function pageTracker(){
-  this.how_many_tabs_opened = 0;
+  //This will have to be merged with the tab tracker
+  //***Someone could switch tabs and not re-load***
+  this.how_many_pages_viewed_in_this_session = 0;
   //Keep all tabs that we're opened during this session.
   this.tabs_currently_opened = {}; 
   this.tabs_closed = {};
+
+  //Attach this js object to gBrowser for use in sidebar
+  if(typeof gBrowser.tabulation_page_object == 'undefined'){
+    gBrowser.tabulation_page_object = this;    
+  }
 }
 
 pageTracker.prototype.addPage = function(page_window){
-  this.how_many_tabs_opened += 1;
-  var browsers_open_with_session = pageTracker.getAllBrowserUrls();
-  if (this.tabs_currently_opened[page_window.location.href] == "undefined") {
-    this.tabs_currently_opened[page_window.location.href] = {
-      "id": page_window.location.href,
-      "number_times_accessed_in_session": 0,
-      "number_tabs_open_with_in_session": gBrowsers.browsers.length
+
+  //An array of urls
+  var browsers_open_with_session = this.getAllBrowserUrls();
+  var url;
+  var curr_url;
+  for(url in browsers_open_with_session){
+    curr_url = browsers_open_with_session[url];
+    if (curr_url in this.tabs_currently_opened) {
+      var temp_tab_obj = this.tabs_currently_opened[curr_url];
+      temp_tab_obj.number_times_accessed_in_session += 1;
+
+      var temp_avg_number_tabs_open = this.tabs_currently_opened[curr_url].avg_number_tabs_open_during_session;
+      temp_avg_number_tabs_open.push(gBrowser.browsers.length);
+      temp_tab_obj.avg_number_tabs_open_during_session = temp_avg_number_tabs_open;
     }
-  };
+    else {
+      this.tabs_currently_opened[curr_url] = {
+        id: url,
+        number_times_accessed_in_session: 0,
+        avg_number_tabs_open_during_session: [gBrowser.browsers.length]
+      };
+    }
+  }
 }
 
 //We want to determine the pages open in this session
@@ -35,16 +55,18 @@ pageTracker.prototype.getAllBrowserUrls = function(urls_already_registered){
   //The reasoning behind this code can be found:
   //https://developer.mozilla.org/en-US/docs/Code_snippets/Tabbed_browser
   var num = gBrowser.browsers.length;
-  var currently_open_urls = {};
+  var currently_open_urls = []
   for (var i = 0; i < num; i++) {
-    var b = gBrowser.getBrowserAtIndex(i);
+    var b_urls = gBrowser.getBrowserAtIndex(i);
     try {
+      //Loop through all open windows and push them to this array
+      currently_open_urls.push(b_urls.currentURI.spec)
 
-      dump(b.currentURI.spec); // dump URLs of all open tabs to console
     } catch(e) {
       Components.utils.reportError(e);
     }
-  }  
+  }
+  return currently_open_urls;  
 }
 
 function tabulationPageLoad(event) {
@@ -61,7 +83,7 @@ function tabulationPageLoad(event) {
       //Listen once to create tabTracker, then die
       return;
     }
-    
+    alert("pageEvent");
     if(typeof page_tracker == 'undefined'){
       page_tracker = new pageTracker();
       page_tracker.addPage(win)
