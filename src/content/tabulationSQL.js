@@ -2,6 +2,7 @@
 Components.utils.import("resource://gre/modules/NetUtil.jsm");
 Components.utils.import("resource://gre/modules/FileUtils.jsm");
 
+
 var tabulation_flat_table = {
 		initialize: function(file_name){
 			var dir = DirIO.get("ProfD");
@@ -18,7 +19,6 @@ var tabulation_flat_table = {
 				this.tabulation_file.append(file_name);
 
 				if(!this.tabulation_file.exists()){
-					alert("double_check existence");
 					if(!FileIO.create(this.tabulation_file)){
 					    throw Error("Failed to create earnings backup file");
 					}

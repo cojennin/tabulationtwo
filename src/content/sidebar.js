@@ -83,10 +83,10 @@ tabListManager = {
 			json_all_tabs = JSON.parse(all_tabs);
 		}
 		catch(e){
-			alert("error");
 			json_all_tabs = {};
 		}
 
+		//alert(json_all_tabs);
 		//In this session, have we already added links 
 		//to be opened the next time this page is loaded?
 		try{
@@ -97,12 +97,15 @@ tabListManager = {
 			}
 		}
 		catch(e){
-			alert("could not find array");
+			//alert("could not find array");
 		}
 	},
 	addLinkToList: function(){
 		//Check if anything is in the input field
 		var link_to_add = document.getElementById('tabulation-link-to-add');
+		if(link_to_add.trim() == ""){
+			return false;
+		}
 		this.list_of_links.appendItem(link_to_add.value, link_to_add.value);
 		link_to_add.value = "";
 	},

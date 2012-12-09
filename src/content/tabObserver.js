@@ -13,7 +13,8 @@ function tabObserver(){
 	this.number_of_tabs_opened_all_time = 0;
 	this.number_of_pages_viewed = 0;
 
-	this.pages_in_session = {}
+
+	this.pages_in_session = {};
 
 	//These are for keeping track of page views
 	this.is_opening_tab = false;
@@ -26,4 +27,3 @@ function tabObserver(){
 
 	//For working with page class:
 }
-

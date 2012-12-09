@@ -1,5 +1,6 @@
 //Keep track of everything that's going on in the browser;
 var page_tracker;
+var track_if_opened = [];
 
 //This is our session object
 //It will maintain all knowledge on current browsers, pages, pageLoad events, pageClose events
@@ -28,9 +29,9 @@ pageTracker.prototype.addPage = function(page_window){
       var temp_tab_obj = tab_observer.pages_in_session[curr_url];
       temp_tab_obj.number_times_accessed_in_session += 1;
 
-      var temp_avg_number_tabs_open = this.tabs_currently_opened[curr_url].avg_number_tabs_open_during_session;
+      /*var temp_avg_number_tabs_open = this.tabs_currently_opened[curr_url].avg_number_tabs_open_during_session;
       temp_avg_number_tabs_open.push(gBrowser.browsers.length);
-      temp_tab_obj.avg_number_tabs_open_during_session = temp_avg_number_tabs_open;
+      temp_tab_obj.avg_number_tabs_open_during_session = temp_avg_number_tabs_open;*/
     }
     else {
       tab_observer.pages_in_session[curr_url] = {
@@ -97,14 +98,46 @@ function tabulationPageLoad(event) {
     if(typeof page_tracker == 'undefined'){
       page_tracker = new pageTracker();
       page_tracker.addPage(win)
+      loadOtherTabs(win.document.documentURI);
     }
     else{
       page_tracker.addPage(win);
+      loadOtherTabs(win.document.documentURI);
     }
   }
 }
+
 
 window.addEventListener("load", function load(event){
     window.removeEventListener("load", load, false); //remove listener, no longer needed
     gBrowser.addEventListener("load", tabulationPageLoad, true); 
 },false);
+
+
+
+function loadOtherTabs(curr_url){
+  //Open tabs only once during a session
+  if(track_if_opened.indexOf(curr_url) == -1){
+    var all_tabs = tabulation_flat_table.readFromFile("tabulation_tab_store.json");
+    var json_all_tabs;
+    
+    try{
+      json_all_tabs = JSON.parse(all_tabs);
+    }
+    catch(e){
+      json_all_tabs = {};
+    }
+
+    //In this session, have we already added links 
+    //to be opened the next time this page is loaded?
+    try{
+      var temp_arry = json_all_tabs[curr_url];
+      //Append links that already exist to listbox
+      for(var link in temp_arry){
+        gBrowser.addTab(temp_arry[link]);
+      }
+    }
+    catch(e){}
+  }
+  this.track_if_opened.push(curr_url);
+}

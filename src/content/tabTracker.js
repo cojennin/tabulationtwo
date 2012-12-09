@@ -42,6 +42,10 @@ function tabTracker(){
 tabTracker.prototype.updateTabsChanged = function(event){
 	tab_observer.total_number_of_times_tab_has_been_switched += 1;
 	tab_observer.is_tab_selected_after_open = true;
+	var sidebarWindow = document.getElementById("sidebar").contentWindow;
+	if (sidebarWindow.location.href == "chrome://tabularity/content/tab-window.xul") {
+		toggleSidebar();
+    }
 }
 
 tabTracker.prototype.updateTabsOpened = function(event){
@@ -50,6 +54,5 @@ tabTracker.prototype.updateTabsOpened = function(event){
 }
 
 tabTracker.prototype.updateTabsClosed = function(event){
-	alert("close")
 	tab_observer.total_number_of_tabs_closed_during_session += 1;
 }
