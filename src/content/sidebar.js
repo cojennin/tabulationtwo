@@ -88,9 +88,10 @@ function instantiateTabListManager(){
 
 			var temp_links = document.getElementById('tabulaton-link-list')
 			
-			const XUL_NS = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
+			//This was used in debugging stuff, can be removed (possibly)
+			/*const XUL_NS = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
 	  		var item = document.createElementNS(XUL_NS, "listbox"); // create a new XUL menuitem
-			
+			*/
 			var count = temp_links.itemCount;
 			
 			var curr_browser = mainDocWindow.gBrowser;

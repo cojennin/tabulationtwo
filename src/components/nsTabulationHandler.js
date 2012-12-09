@@ -10,6 +10,7 @@ function TabulationHandler(){
 	TabulationHandler.show_closed_all_time = 1;
 	TabulationHandler.show_switched_all_time = 1;
 	TabulationHandler.limit_open_tabs = 1;
+	TabulationHandler.open_tabs_every_time = 0;
 }
 
 //Not sure why we're overwriting the prototype...
@@ -24,6 +25,14 @@ TabulationHandler.prototype = {
 
 	QueryInterface: XPCOMUtils.generateQI([Components.interfaces.nsITabulationHandler, 
 											Components.interfaces.nsISupports]),
+
+	getOpenTabsEveryTime: function(){
+		TabulationHandler.getOpenTabsEveryTime();
+	},
+
+	setOpenTabsEveryTime: function(){
+		TabulationHandler.setOpenTabsEveryTime();
+	},
 
 	getShowOpenAllTime: function(){
 		TabulationHandler.getShowOpenAllTimeVar();
@@ -68,14 +77,15 @@ TabulationHandler.makePrefObserver = {
 
 	startup: function() {
      // Register to receive notifications of preference changes
-      
-     this.prefs = Components.classes["@mozilla.org/preferences-service;1"]
+    	this.prefs = Components.classes["@mozilla.org/preferences-service;1"]
          .getService(Components.interfaces.nsIPrefService)
-         .getBranch("extensions.stockwatcher2.");
-     this.prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
-     this.prefs.addObserver("", this, false);
+         .getBranch("extensions.tabulation.");
+    	this.prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
+    	this.prefs.addObserver("", this, false);
       
-     //this.tickerSymbol = this.prefs.getCharPref("symbol").toUpperCase();
+      	//Utilize the getBoolPref function, which gets the bool value from there preference
+      	//Documentation here: https://developer.mozilla.org/en-US/docs/XPCOM_Interface_Reference/nsIPrefBranch#getBoolPref()
+    	this.open_tabs_every_time = this.prefs.getBoolPref("open_tabs_every_time");     
    	},
    	
    	shutdown: function() {
@@ -88,47 +98,60 @@ TabulationHandler.makePrefObserver = {
 	       return;
 	     }
 
-	     FileTrayHandler.updateAllPrefs();
-	  
-	     /*switch(data)
+	     switch(data)
 	     {
-	       case "symbol":
-	         this.tickerSymbol = this.prefs.getCharPref("symbol").toUpperCase();
-	         this.refreshInformation();
+	       case "open_tabs_every_time":
+	       		this.setOpenTabsEveryTime()
 	         break;
-	     }*/
+	     }
 	},
 }
 
 //Here we probably want to run all the getter methods
-TabulationHandler.updateAllPrefs = function(){
+//Do we even need getter methods?
 
+/* For utilization of io.js, make sure this file loads AFTER IO.JS
+ * IS LOADED IN THE PREFERENCES PANE
+ */
+TabulationHandler.clearHistory = function(){
+	//Find and delete the json file that stores our tab data
+	//I AM U-571. DESTROY ME!
+	//Actually, our json file should probs be given a preference name...
+	//Come back to that in a bit
 }
 
-TabulationHandler.getShowOpenAllTimeVar = function(){
-
+//Once again, the functions used in the setOpenTabsEveryTime
+//function can be found here:https://developer.mozilla.org/en-US/docs/XPCOM_Interface_Reference/nsIPrefBranch
+TabulationHandler.setOpenTabsEveryTime = function(){
+	//Store the opposite of our current preference
+	this.prefs.setBoolPref("open_tabs_every_time", !(this.open_tabs_every_time));
 }
+
+/* THESE WILL POSSIBLY BE IMPLEMENTED LATER, DO NOT LOOK BELOW
+ * THIS LINE FOR THE MOMENT
+-------------------------------------------------------------------
+*/
+
+//TabulationHandler.getShowOpenAllTimeVar = function(){
+//
+//}
 
 TabulationHandler.setShowOpenAllTimeVar = function(){
 
 }
 
-TabulationHandler.getShowClosedAllTimeVar = function(){
-
-}
+//TabulationHandler.getShowClosedAllTimeVar = function(){
+//
+//}
 
 TabulationHandler.setShowClosedAllTimeVar = function(){
 
 }
 
-TabulationHandler.getShowSwitchedAllTimeVar = function(){
-
-}
+//TabulationHandler.getShowSwitchedAllTimeVar = function(){
+//
+//}
 
 TabulationHandler.setShowSwitchedAllTimeVar = function(){
-
-}
-
-TabulationHandler.clearHistory = function(){
 
 }

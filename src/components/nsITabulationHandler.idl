@@ -3,17 +3,18 @@
 [scriptable, uuid(5d2f9400-41c8-11e2-a25f-0800200c9a66)]
 interface nsITabulation : nsISupports
 {
+
+  int open_tabs_every_time;
   int show_open_all_time;
   int show_closed_all_time;
   int show_switched_all_time;
 
-  int getShowOpenAllTime();
+  void setOpenTabsEveryTime();
+
   void setShowOpenAllTime();
 
-  int getShowClosedAllTime();
   void setShowClosedAllTime();
 
-  int getShowSwitchedAllTime();
   void setShowSwitchedAllTime();
 
   void clearHistory();

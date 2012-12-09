@@ -11,7 +11,9 @@
     </prefpane>
     <prefpane id="tabularity-browser-preferences-history" label="Clear history">
       <hbox>
-        <button id="tabulation-clear-history" label="Clear Tabulation history" />
+        <button id="tabulation-clear-history" label="Clear Tabulation history" oncommand="TabulationHandler.clearHistory()" />
       </hbox>
     </prefpane>
+    <!--<script src="chrome://tabularity/content/io.js"></script>-->
+    <!--<script src="chrome://tabularity/components"-->
   </prefwindow>
