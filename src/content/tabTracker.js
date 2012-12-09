@@ -62,3 +62,4 @@ tabTracker.prototype.updateTabsOpened = function(event){
 tabTracker.prototype.updateTabsClosed = function(event){
 	tab_observer.total_number_of_tabs_closed_during_session += 1;
 }
+

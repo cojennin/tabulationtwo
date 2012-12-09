@@ -21,6 +21,7 @@ function tabObserver(){
 	this.is_tab_selected_after_open = false;
 
 	//For working with tab class:
+   
 	this.total_number_of_tabs_opened_during_session = 0;
 	this.total_number_of_tabs_closed_during_session = 0;
 	this.total_number_of_times_tab_has_been_switched = 0;
