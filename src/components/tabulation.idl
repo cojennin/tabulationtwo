@@ -1,0 +1,12 @@
+#include "nsISupports.idl"
+
+[scriptable, uuid(5d2f9400-41c8-11e2-a25f-0800200c9a66)]
+interface nsITabulation : nsISupports
+{
+  int show_open_all_time;
+  int show_closed_all_time;
+  int show_switched_all_time;
+
+  void getAllPreferences();
+  void setAllPreferences();
+};  
