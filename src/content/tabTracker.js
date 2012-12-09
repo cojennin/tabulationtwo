@@ -51,6 +51,10 @@ tabTracker.prototype.updateTabsChanged = function(event){
 tabTracker.prototype.updateTabsOpened = function(event){
 	tab_observer.total_number_of_tabs_opened_during_session += 1;
 	tab_observer.is_opening_tab = true;
+	var sidebarWindow = document.getElementById("sidebar").contentWindow;
+	if (sidebarWindow.location.href == "chrome://tabularity/content/tab-window.xul") {
+		toggleSidebar();
+    }
 }
 
 tabTracker.prototype.updateTabsClosed = function(event){

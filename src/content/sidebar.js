@@ -6,7 +6,10 @@ var mainDocWindow =  window.QueryInterface(Components.interfaces.nsIInterfaceReq
             .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
             .getInterface(Components.interfaces.nsIDOMWindow);
 
+var temp_links_list = document.getElementById('tabulaton-link-list');
+
 	function TabulationTabListener(mainWindow){
+		temp_links_list = document.getElementById('tabulaton-link-list');
 		//Access gBrowser from within our sidebar
 			this.tabMainWindow = mainWindow;
 
@@ -57,12 +60,7 @@ tab_listener.updateDocTitle();
  * when opening url
  */
 
-var tabListManager;
-if(tabListManager == "undefined"){
-	tabListManager = {};
-}
-
-tabListManager = {
+var tabListManager = {
 
 	list_of_links: document.getElementById('tabulaton-link-list'), 
 
@@ -90,20 +88,23 @@ tabListManager = {
 		//In this session, have we already added links 
 		//to be opened the next time this page is loaded?
 		try{
+			//var temp_links_list = document.getElementById('tabulaton-link-list');
 			var temp_arry = json_all_tabs[curr_url];
 			//Append links that already exist to listbox
+			var i = 0;
 			for(var link in temp_arry){
-				this.list_of_links.appendItem(temp_arry[link], temp_arry[link]);
+				this.list_of_links.insertItemAt(i, temp_arry[link], temp_arry[link])
+				i++;
 			}
 		}
 		catch(e){
-			//alert("could not find array");
+			alert(e);
 		}
 	},
 	addLinkToList: function(){
 		//Check if anything is in the input field
 		var link_to_add = document.getElementById('tabulation-link-to-add');
-		if(link_to_add.trim() == ""){
+		if(link_to_add.value.trim() == ""){
 			return false;
 		}
 		this.list_of_links.appendItem(link_to_add.value, link_to_add.value);
@@ -119,6 +120,7 @@ tabListManager = {
 	addAllLinksFromOpenBrowsers: function(){
 		var curr_browser = mainDocWindow.gBrowser;
 		var num = curr_browser.browsers.length;
+
 	  	for (var i = 0; i < num; i++) {
 	    	var b_urls = curr_browser.getBrowserAtIndex(i);
 	    	try {

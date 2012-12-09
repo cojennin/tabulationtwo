@@ -21,6 +21,7 @@
 
                 <p style="margin-top:4px">The next time this page is loaded, open the following tabs: </p>
                 <vbox class="tabulation-content-block">
+                    <span id="append-listbox-after-me"></span>
                     <listbox id="tabulaton-link-list" ></listbox>
                     <textbox id="tabulation-link-to-add" />
                     <hbox flex="1">
