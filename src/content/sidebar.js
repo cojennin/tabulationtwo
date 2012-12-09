@@ -31,18 +31,28 @@ var global_check = 0;
 		//If undefined, null, etc, it means we've just opened the browser
 		//For now, set to 0, but eventually will need to check on browser load event tog et
 		//accurate count of all browsers. Also will need to update on browser change
-		var curr_opened_tabs = $('#currently-opened-tabs');
-		if(this.tabulation_tabs.how_many_tabs_opened_in_this_session)
-			curr_opened_tabs.text(" " + this.tabulation_tabs.total_number_of_tabs_opened_during_session);
-		else
-			curr_opened_tabs.text(" 0");
+		var curr_opened_tabs = $('#number-of-tabs-currently-open');
+		curr_opened_tabs.text(this.tabMainWindow.gBrowser.browsers.length)
 	}
 
-	TabulationTabListener.prototype.updateNumTimesOpened = function(){
-		var current_url = this.tabMainWindow.gBrowser.contentDocument.URL;
-		var times_accessed = this.tabulation_tabs.tabs_currently_opened[current_url].number_times_accessed_in_session;
-		$('#num-times-opened').text(" "+times_accessed.toString());
+	TabulationTabListener.prototype.numberOfTimesOpened = function(){
+		$('#num-times-tabs-opened-session').text(mainDocWindow.tab_observer.total_number_of_tabs_opened_during_session);
+
+		//Long term data output goes here
 	}
+
+	TabulationTabListener.prototype.numberOfTimesSwitched = function(){
+		$('#num-times-tabs-switched-session').text(mainDocWindow.tab_observer.total_number_of_times_tab_has_been_switched);
+
+		//Long term data output goes here
+	}
+
+	TabulationTabListener.prototype.numberOfTimesClosed = function(){
+		$('#num-times-tabs-closed-session').text(mainDocWindow.tab_observer.total_number_of_tabs_closed_during_session);
+
+		//Long term data output goes here
+	}
+
 
 	/*TabulationTabListener.prototype.logit = function(msg){
 		this.tabMainWindow.console.log(msg);
@@ -51,8 +61,10 @@ var global_check = 0;
 //Is a check needed here to see if tab_listener is defined?
 var tab_listener = new TabulationTabListener(mainDocWindow);
 tab_listener.updateDocTitle();
-//tab_listener.currentlyOpenedTabs();
-//tab_listener.updateNumTimesOpened();
+tab_listener.currentlyOpenedTabs();
+tab_listener.numberOfTimesOpened();
+tab_listener.numberOfTimesSwitched();
+tab_listener.numberOfTimesClosed();
 
 
 /* Object for handling addition of tabs to list of tabs to pne
@@ -160,7 +172,7 @@ function instantiateTabListManager(){
 			//Doesn't matter if it exists, always set our array to 0
 			//That way, it can always recommit correctly
 			json_all_tabs[curr_url] = [];
-			
+
 			for(var i = 0; i < count; i++){
 				alert(this.list_of_links.getItemAtIndex(i).value);
 				json_all_tabs[curr_url][i] = this.list_of_links.getItemAtIndex(i).value;

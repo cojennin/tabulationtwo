@@ -13,10 +13,22 @@
                     <h2 id="tabulation-doc-name" class="indent-left large-header-bold standard-font"></h2>
                 </div>
                 <div class="tabulation-content-block">
-                    <p>Number of times this page has been accessed during this session: <span id="num-times-opened"></span></p>
+                    <p>Number of tabs currently open: <span id="number-of-tabs-currently-open"></span></p>
                 </div>
                 <div class="tabulation-content-block">
-                    <p>Total number of tabs opened during this session:  <span id="currently-opened-tabs"></span></p>
+                    <h5 class="block-me totals">Total tabs opened</h5>
+                    <p class="block-me">This session: <span id="num-times-tabs-opened-session"></span></p>
+                    All time: <span id="num-times-tabs-opened-alltime"></span>
+                </div>
+                <div class="tabulation-content-block">
+                    <h5 class="block-me totals">Total number of times tabs switched</h5>
+                     <p class="block-me">This session: <span id="num-times-tabs-switched-session"></span></p>
+                     All time: <span id="num-times-tabs-switched-alltime"></span>
+                </div>
+                <div class="tabulation-content-block">
+                    <h5 class="block-me totals">Total tabs closed</h5>
+                     <p class="block-me">This session: <span id="num-times-tabs-closed-session"></span></p>
+                     All time: <span id="num-times-tabs-closed-alltime"></span>
                 </div>
 
                 <p style="margin-top:4px">The next time this page is loaded, open the following tabs: </p>

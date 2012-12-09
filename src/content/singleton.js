@@ -23,15 +23,15 @@ pageTracker.prototype.addPage = function(page_window){
   var browsers_open_with_session = this.getAllBrowserUrls();
   var url;
   var curr_url;
-  for(url in browsers_open_with_session){
+  /*for(url in browsers_open_with_session){
     curr_url = browsers_open_with_session[url];
     if (curr_url in tab_observer.pages_in_session) {
       var temp_tab_obj = tab_observer.pages_in_session[curr_url];
       temp_tab_obj.number_times_accessed_in_session += 1;
 
-      /*var temp_avg_number_tabs_open = this.tabs_currently_opened[curr_url].avg_number_tabs_open_during_session;
+      var temp_avg_number_tabs_open = this.tabs_currently_opened[curr_url].avg_number_tabs_open_during_session;
       temp_avg_number_tabs_open.push(gBrowser.browsers.length);
-      temp_tab_obj.avg_number_tabs_open_during_session = temp_avg_number_tabs_open;*/
+      temp_tab_obj.avg_number_tabs_open_during_session = temp_avg_number_tabs_open;
     }
     else {
       tab_observer.pages_in_session[curr_url] = {
@@ -40,7 +40,7 @@ pageTracker.prototype.addPage = function(page_window){
         avg_number_tabs_open_during_session: [gBrowser.browsers.length]
       };
     }
-  }
+  }*/
 }
 
 //We want to determine the pages open in this session
@@ -85,7 +85,7 @@ function tabulationPageLoad(event) {
     }
 
     /* Tab + page load check */
-    if(!tab_observer.is_opening_tab){
+   /* if(!tab_observer.is_opening_tab){
       tab_observer.number_of_pages_viewed += 1;
     }
     else if(tab_observer.is_opening_tab && tab_observer.is_tab_selected_after_open){
@@ -93,7 +93,7 @@ function tabulationPageLoad(event) {
       tab_observer.is_opening_tab = false
       tab_observer.number_of_pages_viewed += 1;
 
-    }
+    }*/
 
     if(typeof page_tracker == 'undefined'){
       page_tracker = new pageTracker();
