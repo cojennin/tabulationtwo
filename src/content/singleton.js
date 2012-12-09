@@ -1,10 +1,4 @@
 //Keep track of everything that's going on in the browser;
-document.addEventListener("DOMContentLoaded", findingTabObserver, false);
-var findingTabObserver= function(event){
-    tab_observer=undefined;
-}
-    document.removeEventListener("DOMContentLoaded", findingTabObserver, false);
-
 var page_tracker;
 var track_if_opened = [];
 
@@ -114,7 +108,6 @@ function tabulationPageLoad(event) {
 }
 
 
-
 window.addEventListener("load", function load(event){
     window.removeEventListener("load", load, false); //remove listener, no longer needed
     gBrowser.addEventListener("load", tabulationPageLoad, true); 
@@ -146,7 +139,5 @@ function loadOtherTabs(curr_url){
     }
     catch(e){}
   }
-
   this.track_if_opened.push(curr_url);
-
 }

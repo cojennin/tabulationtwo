@@ -30,7 +30,7 @@
           observes="viewTabularitySidebar" />
           <menuitem id="tabularity-preferences-item"
             label="Preferences"
-            oncommand='window.openDialog("chrome://tabularity/content/preferences.xul", "tabulationPreferences", "chrome,titlebar,toolbar,centerscreen,modal", this);'
+            oncommand='window.openDialog("chrome://tabularity/content/preferences.xul", "tabulationPreferences", "chrome,toolbar,centerscreen,modal", this);'
           />
       </menupopup>
     </menu>

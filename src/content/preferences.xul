@@ -7,11 +7,19 @@
           <radio preference="perSession" id="session" label="Open tabs once per session" accesskey="S" selected="true"/>
     		  <radio preference="perSession" id="instance" label="Open tabs every tab instance"  accesskey="I"/>
     		</radiogroup>
+		<button id="close" label="Finish" oncommand="close()"/>
       </hbox>
     </prefpane>
     <prefpane id="tabularity-browser-preferences-history" label="Clear history">
       <hbox>
-        <button id="tabulation-clear-history" label="Clear Tabulation history" />
+        <button id="tabulation-clear-history" label="Clear Tabulation history" oncommand="TabulationHandler.clearHistory()" />
+	<button id="close" label="Finish" oncommand="close()"/>
       </hbox>
     </prefpane>
+ <script src="chrome://tabularity/content/io.js"> </script>
+<script src="chrome://tabularity/content/tabulationPreferences.js"> </script>
+ <script>   close: function(){
+window.close();
+    }
+ </script>
   </prefwindow>
