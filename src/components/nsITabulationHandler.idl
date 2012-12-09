@@ -4,10 +4,10 @@
 interface nsITabulation : nsISupports
 {
 
-  int open_tabs_every_time;
-  int show_open_all_time;
-  int show_closed_all_time;
-  int show_switched_all_time;
+  //int open_tabs_every_time;
+  //int show_open_all_time;
+  //int show_closed_all_time;
+  //int show_switched_all_time;
 
   void setOpenTabsEveryTime();
 
