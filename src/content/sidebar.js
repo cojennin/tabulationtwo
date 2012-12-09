@@ -6,10 +6,9 @@ var mainDocWindow =  window.QueryInterface(Components.interfaces.nsIInterfaceReq
             .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
             .getInterface(Components.interfaces.nsIDOMWindow);
 
-var temp_links_list = document.getElementById('tabulaton-link-list');
+var global_check = 0;
 
 	function TabulationTabListener(mainWindow){
-		temp_links_list = document.getElementById('tabulaton-link-list');
 		//Access gBrowser from within our sidebar
 			this.tabMainWindow = mainWindow;
 
@@ -52,8 +51,8 @@ var temp_links_list = document.getElementById('tabulaton-link-list');
 //Is a check needed here to see if tab_listener is defined?
 var tab_listener = new TabulationTabListener(mainDocWindow);
 tab_listener.updateDocTitle();
-tab_listener.currentlyOpenedTabs();
-tab_listener.updateNumTimesOpened();
+//tab_listener.currentlyOpenedTabs();
+//tab_listener.updateNumTimesOpened();
 
 
 /* Object for handling addition of tabs to list of tabs to pne
@@ -72,6 +71,10 @@ var tabListManager = {
 		this.curr_links;
 	},
 	intializeLinksToDisplay: function(){
+
+		var temp_links = document.getElementById('tabulaton-link-list')
+		var count = temp_links.itemCount;
+		
 		var curr_browser = mainDocWindow.gBrowser;
 		var curr_url = curr_browser.contentDocument.documentURI;
 
@@ -91,6 +94,10 @@ var tabListManager = {
 			//var temp_links_list = document.getElementById('tabulaton-link-list');
 			var temp_arry = json_all_tabs[curr_url];
 			//Append links that already exist to listbox
+			var count = this.list_of_links.itemCount;
+			while(count-- > 0){
+				this.list_of_links.removeItemAt(0);
+			}
 			var i = 0;
 			for(var link in temp_arry){
 				this.list_of_links.insertItemAt(i, temp_arry[link], temp_arry[link])
@@ -98,7 +105,9 @@ var tabListManager = {
 			}
 		}
 		catch(e){
-			alert(e);
+			for(var link in temp_arry){
+				this.list_of_links.appendItem(temp_arry[link], temp_arry[link])
+			}
 		}
 	},
 	addLinkToList: function(){
