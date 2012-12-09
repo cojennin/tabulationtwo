@@ -103,8 +103,11 @@ tabListManager = {
 	addLinkToList: function(){
 		//Check if anything is in the input field
 		var link_to_add = document.getElementById('tabulation-link-to-add');
+	    var str=link_to_add;
+	   // if ((str.replace(/[^A-Z]/gi, "").length)>0);
 		this.list_of_links.appendItem(link_to_add.value, link_to_add.value);
 		link_to_add.value = "";
+	  //  }
 	},
 	removeLinkFromList: function(){
 		var count = this.list_of_links.selectedCount;
