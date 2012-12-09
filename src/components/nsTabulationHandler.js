@@ -71,7 +71,7 @@ TabulationHandler.makePrefObserver = {
       
      this.prefs = Components.classes["@mozilla.org/preferences-service;1"]
          .getService(Components.interfaces.nsIPrefService)
-         .getBranch("extensions.stockwatcher2.");
+         .getBranch("extensions.Tabularity.");
      this.prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
      this.prefs.addObserver("", this, false);
       
