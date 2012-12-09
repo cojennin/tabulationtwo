@@ -3,17 +3,27 @@
   <prefwindow id="tabularity-browser-preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
     <prefpane id="tabularity-browser-preferences-session" label="Session info">
   		<hbox>
-        <radiogroup>
+        <preferences>
+            <preference id="open-all-tabs" name="tabulation.open_tabs_every_time" type="bool"/>
+        </preferences>
+        <!--<radiogroup>
           <radio preference="perSession" id="session" label="Open tabs once per session" accesskey="S" selected="true"/>
     		  <radio preference="perSession" id="instance" label="Open tabs every tab instance"  accesskey="I"/>
-    		</radiogroup>
+    		</radiogroup>-->
+      <!-- Radio Button example (this example would be stored as a boolean) -->
+        <radiogroup>
+          <radio value="false" id="per" label="Open tabs once per session" preference="open-all-tabs"/>
+          <radio value="true" id="once" label="Open tabs every tab instance" preference="open-all-tabs" />
+        </radiogroup>
+
       </hbox>
     </prefpane>
     <prefpane id="tabularity-browser-preferences-history" label="Clear history">
       <hbox>
-        <button id="tabulation-clear-history" label="Clear Tabulation history" oncommand="TabulationHandler.clearHistory()" />
+        <button id="tabulation-clear-history" label="Clear Tabulation history" oncommand="alert(testComponent.clearHistory())" />
       </hbox>
     </prefpane>
     <script src="chrome://tabularity/content/io.js"></script>
+    <script src="chrome://tabularity/content/tabulationSQL.js"></script>
    <script src="chrome://tabularity/content/tabulationPreferences.js"></script>
   </prefwindow>

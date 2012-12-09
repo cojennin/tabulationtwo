@@ -38,5 +38,9 @@ var tabulation_flat_table = {
 			this.initialize(file_name);
 			var file_contents = FileIO.read(this.tabulation_file);
 			return file_contents;
+		},
+		removeFile: function(file_name){
+			this.initialize(file_name);
+			return FileIO.unlink(this.tabulationfile);
 		}
 	}
