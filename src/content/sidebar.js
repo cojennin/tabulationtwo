@@ -49,8 +49,8 @@ var mainDocWindow =  window.QueryInterface(Components.interfaces.nsIInterfaceReq
 //Is a check needed here to see if tab_listener is defined?
 var tab_listener = new TabulationTabListener(mainDocWindow);
 tab_listener.updateDocTitle();
-//tab_listener.currentlyOpenedTabs();
-//tab_listener.updateNumTimesOpened();
+tab_listener.currentlyOpenedTabs();
+tab_listener.updateNumTimesOpened();
 
 
 /* Object for handling addition of tabs to list of tabs to pne
