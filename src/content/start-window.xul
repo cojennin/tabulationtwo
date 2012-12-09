@@ -10,8 +10,11 @@
     insertafter="helpMenu">
       <menupopup>
         <menuitem id="tabularity-menu-item"
-        label="Start"
-        observes="viewTabularitySidebar" />
+          label="Start"
+          observes="viewTabularitySidebar" />
+         <menuitem id="tabularity-preferences-item"
+            label="Preferences"
+          />
       </menupopup>
     </menu>
   
@@ -24,6 +27,9 @@
          <menuitem id="tabularity-menu-item"
           label="Start"
           observes="viewTabularitySidebar" />
+          <menuitem id="tabularity-preferences-item"
+            label="Preferences"
+          />
       </menupopup>
     </menu>
   </vbox>
