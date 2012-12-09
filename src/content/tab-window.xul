@@ -20,8 +20,8 @@
                 </div>
 
                 <p style="margin-top:4px">The next time this page is loaded, open the following tabs: </p>
+                <listbox id="tabulaton-link-list" />
                 <vbox class="tabulation-content-block">
-                    <listbox id="tabulaton-link-list" ></listbox>
                     <textbox id="tabulation-link-to-add" />
                     <hbox flex="1">
                         <button id="tabulation-add-link-button" label="Add link" oncommand="tabListManager.addLinkToList()" />

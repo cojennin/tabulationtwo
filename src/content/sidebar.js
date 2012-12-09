@@ -58,114 +58,123 @@ tab_listener.updateDocTitle();
 /* Object for handling addition of tabs to list of tabs to pne
  * when opening url
  */
+var tabListManager;
+function instantiateTabListManager(){
+	tabListManager = {
 
-var tabListManager = {
+		list_of_links: document.getElementById('tabulaton-link-list'), 
 
-	list_of_links: document.getElementById('tabulaton-link-list'), 
+		manageTabsToOpen: function(){
+			//See if jQuery support is available.
+			//Get browser url for reference
+			this.temp_g_browser = mainDocWindow.gBrowser;
+			this.curr_url = mainDocWindow.gBrowser.contentDocument.documentURI;
+			this.curr_links;
+		},
 
-	manageTabsToOpen: function(){
-		//See if jQuery support is available.
-		//Get browser url for reference
-		this.temp_g_browser = mainDocWindow.gBrowser;
-		this.curr_url = mainDocWindow.gBrowser.contentDocument.documentURI;
-		this.curr_links;
-	},
-	intializeLinksToDisplay: function(){
+		intializeLinksToDisplay: function(){
 
-		var temp_links = document.getElementById('tabulaton-link-list')
-		var count = temp_links.itemCount;
-		
-		var curr_browser = mainDocWindow.gBrowser;
-		var curr_url = curr_browser.contentDocument.documentURI;
+			var temp_links = document.getElementById('tabulaton-link-list')
+			
+			const XUL_NS = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
+	  		var item = document.createElementNS(XUL_NS, "listbox"); // create a new XUL menuitem
+			
+			var count = temp_links.itemCount;
+			
+			var curr_browser = mainDocWindow.gBrowser;
+			var curr_url = curr_browser.contentDocument.documentURI;
 
-		var all_tabs = tabulation_flat_table.readFromFile("tabulation_tab_store.json");
-		var json_all_tabs;
-		try{
-			json_all_tabs = JSON.parse(all_tabs);
-		}
-		catch(e){
-			json_all_tabs = {};
-		}
+			var all_tabs = tabulation_flat_table.readFromFile("tabulation_tab_store.json");
+			var json_all_tabs;
+			try{
+				json_all_tabs = JSON.parse(all_tabs);
+			}
+			catch(e){
+				json_all_tabs = {};
+			}
 
-		//alert(json_all_tabs);
-		//In this session, have we already added links 
-		//to be opened the next time this page is loaded?
-		try{
-			//var temp_links_list = document.getElementById('tabulaton-link-list');
-			var temp_arry = json_all_tabs[curr_url];
-			//Append links that already exist to listbox
+			//alert(json_all_tabs);
+			//In this session, have we already added links 
+			//to be opened the next time this page is loaded?
+			try{
+				//var temp_links_list = document.getElementById('tabulaton-link-list');
+				var temp_arry = json_all_tabs[curr_url];
+				//Append links that already exist to listbox
+				
+				var i = 0;
+				for(var link in temp_arry){
+					temp_links.insertItemAt(i, temp_arry[link], temp_arry[link])
+					i++;
+				}
+			}
+			catch(e){
+				alert(e);
+			}
+		},
+		addLinkToList: function(){
+			//Check if anything is in the input field
+			var link_to_add = document.getElementById('tabulation-link-to-add');
+			if(link_to_add.value.trim() == ""){
+				return false;
+			}
+			this.list_of_links.appendItem(link_to_add.value, link_to_add.value);
+			link_to_add.value = "";
+		},
+		removeLinkFromList: function(){
+			var count = this.list_of_links.selectedCount;
+			while (count--){
+				var item = this.list_of_links.selectedItems[0];
+			    this.list_of_links.removeItemAt(this.list_of_links.getIndexOfItem(item));
+			}
+		},
+		addAllLinksFromOpenBrowsers: function(){
+			var curr_browser = mainDocWindow.gBrowser;
+			var num = curr_browser.browsers.length;
+
+		  	for (var i = 0; i < num; i++) {
+		    	var b_urls = curr_browser.getBrowserAtIndex(i);
+		    	try {
+		      		//Loop through all open windows and push them to this array
+		      		this.list_of_links.appendItem(b_urls.currentURI.spec, b_urls.currentURI.spec);
+		    	} catch(e) {
+		      		Components.utils.reportError(e);
+		    	}
+		  	}
+		},
+		saveAllLinksInList: function(){
+			var curr_browser = mainDocWindow.gBrowser;
+			var curr_url = curr_browser.contentDocument.documentURI;
 			var count = this.list_of_links.itemCount;
-			while(count-- > 0){
-				this.list_of_links.removeItemAt(0);
+			//Storge json like objects in local storage with the key being
+			//the url they're stored under.
+			
+			var all_tabs = tabulation_flat_table.readFromFile("tabulation_tab_store.json");
+			var json_all_tabs;
+			try{
+				json_all_tabs = JSON.parse(all_tabs);
 			}
-			var i = 0;
-			for(var link in temp_arry){
-				this.list_of_links.insertItemAt(i, temp_arry[link], temp_arry[link])
-				i++;
+			catch(e){
+				json_all_tabs = {};
 			}
-		}
-		catch(e){
-			for(var link in temp_arry){
-				this.list_of_links.appendItem(temp_arry[link], temp_arry[link])
-			}
-		}
-	},
-	addLinkToList: function(){
-		//Check if anything is in the input field
-		var link_to_add = document.getElementById('tabulation-link-to-add');
-		if(link_to_add.value.trim() == ""){
-			return false;
-		}
-		this.list_of_links.appendItem(link_to_add.value, link_to_add.value);
-		link_to_add.value = "";
-	},
-	removeLinkFromList: function(){
-		var count = this.list_of_links.selectedCount;
-		while (count--){
-			var item = this.list_of_links.selectedItems[0];
-		    this.list_of_links.removeItemAt(this.list_of_links.getIndexOfItem(item));
-		}
-	},
-	addAllLinksFromOpenBrowsers: function(){
-		var curr_browser = mainDocWindow.gBrowser;
-		var num = curr_browser.browsers.length;
 
-	  	for (var i = 0; i < num; i++) {
-	    	var b_urls = curr_browser.getBrowserAtIndex(i);
-	    	try {
-	      		//Loop through all open windows and push them to this array
-	      		this.list_of_links.appendItem(b_urls.currentURI.spec, b_urls.currentURI.spec);
-	    	} catch(e) {
-	      		Components.utils.reportError(e);
-	    	}
-	  	}
-	},
-	saveAllLinksInList: function(){
-		var curr_browser = mainDocWindow.gBrowser;
-		var curr_url = curr_browser.contentDocument.documentURI;
-		var count = this.list_of_links.itemCount;
-		//Storge json like objects in local storage with the key being
-		//the url they're stored under.
-		
-		var all_tabs = tabulation_flat_table.readFromFile("tabulation_tab_store.json");
-		var json_all_tabs;
-		try{
-			json_all_tabs = JSON.parse(all_tabs);
-		}
-		catch(e){
-			json_all_tabs = {};
-		}
-
-		if(typeof json_all_tabs[curr_url] == "undefined"){
+			//Doesn't matter if it exists, always set our array to 0
+			//That way, it can always recommit correctly
 			json_all_tabs[curr_url] = [];
-		}
+			
+			for(var i = 0; i < count; i++){
+				alert(this.list_of_links.getItemAtIndex(i).value);
+				json_all_tabs[curr_url][i] = this.list_of_links.getItemAtIndex(i).value;
+			}
 
-		for(var i = 0; i < count; i++){
-			json_all_tabs[curr_url][i] = this.list_of_links.getItemAtIndex(i).value;
+			tabulation_flat_table.writeToFile("tabulation_tab_store.json", JSON.stringify(json_all_tabs));
 		}
-
-		tabulation_flat_table.writeToFile("tabulation_tab_store.json", JSON.stringify(json_all_tabs));
 	}
+
+	tabListManager.intializeLinksToDisplay();
 }
 
-tabListManager.intializeLinksToDisplay();
+window.addEventListener("load", function load(event){
+    window.removeEventListener("load", load, false); //remove listener, no longer needed
+    instantiateTabListManager();
+},false);
+ 
