@@ -116,8 +116,16 @@ window.addEventListener("load", function load(event){
 
 
 function loadOtherTabs(curr_url){
+
+    var prefs = Components.classes["@mozilla.org/preferences-service;1"]
+      .getService(Components.interfaces.nsIPrefService)
+      .getBranch("extensions.tabulation.");
+      //prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
+      //pref.setBoolPref("open_tabs_every_time", !(this.open_tabs_every_time));
+  var should_always_open = prefs.getBoolPref("open_tabs_every_time");
+
   //Open tabs only once during a session
-  if(track_if_opened.indexOf(curr_url) == -1){
+  if(should_always_open || track_if_opened.indexOf(curr_url) == -1){
     var all_tabs = tabulation_flat_table.readFromFile("tabulation_tab_store.json");
     var json_all_tabs;
     
@@ -139,5 +147,5 @@ function loadOtherTabs(curr_url){
     }
     catch(e){}
   }
-  this.track_if_opened.push(curr_url);
+    this.track_if_opened.push(curr_url);
 }

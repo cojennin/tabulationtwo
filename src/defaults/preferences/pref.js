@@ -1,6 +1,6 @@
-pref("extensions.tabulation.show_open_all_time", true);
-pref("extensions.tabulation.show_closed_all_time", true);
-pref("extensions.tabulation.show_switched_all_time", true);
+pref("extensions.tabulation.show_open_all_time", false);
+pref("extensions.tabulation.show_closed_all_time", false);
+pref("extensions.tabulation.show_switched_all_time", false);
 
 pref("extensions.tabulation.open_tabs_every_time", false);
 

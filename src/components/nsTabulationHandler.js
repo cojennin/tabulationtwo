@@ -27,10 +27,17 @@ TabulationHandler.prototype = {
 	//contractID: "@tabulationteam.org/tabulationhandler;1",
 	QueryInterface: XPCOMUtils.generateQI([Components.interfaces.nsITabulationHandler]),
 
-	setOpenTabsEveryTime: function(){
-		pref.setBoolPref("open_tabs_every_time", !(this.open_tabs_every_time));
-		alert("test");
-		return "Success";
+	getWhenToOpenTabs: function(){
+		try{
+			var prefs = Components.classes["@mozilla.org/preferences-service;1"]
+	         .getService(Components.interfaces.nsIPrefService)
+	         .getBranch("extensions.tabulation.");
+	     	//prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
+			//pref.setBoolPref("open_tabs_every_time", !(this.open_tabs_every_time));
+			return prefs.getBoolPref("open_tabs_every_time");
+		} catch(e){
+			return e;
+		}
 	},
 
 	setShowOpenAllTime: function(){

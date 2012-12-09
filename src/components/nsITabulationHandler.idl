@@ -5,7 +5,9 @@
 [scriptable, uuid(5d2f9400-41c8-11e2-a25f-0800200c9a66)]
 interface nsITabulationHandler : nsISupports
 {
-  string setOpenTabsEveryTime();
+  bool getWhenToOpenTabs();
+
+
   string setShowOpenAllTime();
   string setShowClosedAllTime();
   string setShowSwitchedAllTime();

@@ -4,7 +4,9 @@
     <prefpane id="tabularity-browser-preferences-session" label="Session info">
   		<hbox>
         <preferences>
-            <preference id="open-all-tabs" name="tabulation.open_tabs_every_time" type="bool"/>
+            <preference id="open-all-tabs" 
+                                name="extensions.tabulation.open_tabs_every_time" 
+                                type="bool" />
         </preferences>
         <!--<radiogroup>
           <radio preference="perSession" id="session" label="Open tabs once per session" accesskey="S" selected="true"/>
@@ -12,15 +14,15 @@
     		</radiogroup>-->
       <!-- Radio Button example (this example would be stored as a boolean) -->
         <radiogroup>
-          <radio value="false" id="per" label="Open tabs once per session" preference="open-all-tabs"/>
-          <radio value="true" id="once" label="Open tabs every tab instance" preference="open-all-tabs" />
+          <radio value="false" id="tabulation-once" label="Open tabs once per session" preference="open-all-tabs"/>
+          <radio value="true" id="tabulation-every" label="Open tabs every tab instance" preference="open-all-tabs"/>
         </radiogroup>
 
       </hbox>
     </prefpane>
     <prefpane id="tabularity-browser-preferences-history" label="Clear history">
       <hbox>
-        <button id="tabulation-clear-history" label="Clear Tabulation history" oncommand="alert(testComponent.clearHistory())" />
+        <button id="tabulation-clear-history" label="Clear Tabulation history" oncommand="testComponent.clearHistory()" />
       </hbox>
     </prefpane>
     <script src="chrome://tabularity/content/io.js"></script>
