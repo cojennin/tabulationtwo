@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/global.css"?>
-  <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <prefwindow id="tabularity-browser-preferences">
+  <prefwindow id="tabularity-browser-preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
     <prefpane id="tabularity-browser-preferences-session" label="Session info">
   		<hbox>
         <radiogroup>
@@ -15,7 +14,6 @@
         <button id="tabulation-clear-history" label="Clear Tabulation history" oncommand="TabulationHandler.clearHistory()" />
       </hbox>
     </prefpane>
-  </prefwindow>
-   <script src="chrome://tabularity/content/io.js"></script>
+    <script src="chrome://tabularity/content/io.js"></script>
    <script src="chrome://tabularity/content/tabulationPreferences.js"></script>
-</overlay>
+  </prefwindow>
