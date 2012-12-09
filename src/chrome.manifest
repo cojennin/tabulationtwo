@@ -1,6 +1,8 @@
 content   tabularity                content/
 skin      tabularity  classic/1.0   skin/
 locale    tabularity  en-US         locale/en-US/
-components tabularity				components/
+interfaces components/nsITabulationHandler.xpt
+component {5d2f9400-41c8-11e2-a25f-0800200c9a66} components/nsTabulationHandler.js
+contract @tabulationteam.org/tabulationhandler;1 {5d2f9400-41c8-11e2-a25f-0800200c9a66}
 
 overlay chrome://browser/content/browser.xul  chrome://tabularity/content/start-window.xul

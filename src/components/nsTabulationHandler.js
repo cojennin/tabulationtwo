@@ -1,17 +1,18 @@
 
 Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
 
-var tabulation_prefs = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+/*var tabulation_prefs = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
                       .getService(Components.interfaces.nsIPromptService);
-
+*/
 
 function TabulationHandler(){
-	TabulationHandler.show_open_all_time = 1;
-	TabulationHandler.show_closed_all_time = 1;
-	TabulationHandler.show_switched_all_time = 1;
-	TabulationHandler.limit_open_tabs = 1;
-	TabulationHandler.open_tabs_every_time = 0;
+
+	//this.wrappedJSObject = this;
 }
+/*
+QueryInterface: XPCOMUtils.generateQI([Components.interfaces.nsITabulationHandler, 
+											Components.interfaces.nsISupports]),
+*/
 
 //Not sure why we're overwriting the prototype...
 //Also, not sure if we need specific getters/setters
@@ -21,57 +22,50 @@ TabulationHandler.prototype = {
 	classDescription: "Tabulation handler XPCOM Component",
 
 	classID: Components.ID("{5d2f9400-41c8-11e2-a25f-0800200c9a66}"),
-	contractID: "@mozilla.org/TabulationHandler;1",
-
-	QueryInterface: XPCOMUtils.generateQI([Components.interfaces.nsITabulationHandler, 
-											Components.interfaces.nsISupports]),
-
-	getOpenTabsEveryTime: function(){
-		TabulationHandler.getOpenTabsEveryTime();
-	},
+	//contractID: "@tabulationteam.org/tabulationhandler;1",
+	QueryInterface: XPCOMUtils.generateQI([Components.interfaces.nsITabulationHandler]),
 
 	setOpenTabsEveryTime: function(){
 		TabulationHandler.setOpenTabsEveryTime();
-	},
-
-	getShowOpenAllTime: function(){
-		TabulationHandler.getShowOpenAllTimeVar();
+		return "Success";
 	},
 
 	setShowOpenAllTime: function(){
 		TabulationHandler.getShowOpenAllTimeVar();
-	},
-
-	getShowClosedAllTime: function(){
-		TabulationHandler.getShowClosedAllTimeVar();
-	},
+		return "Success";
+	},	
 
 	setShowClosedAllTime: function(){
 		TabulationHandler.setShowClosedAllTimeVar();
+		return "Success";
 	},
 
-	getShowSwitchedAllTime: function(){
-		TabulationHandler.getShowSwitchedAllTimeVar();
-	},
 
 	setShowSwitchedAllTime: function(){
 		TabulationHandler.setShowSwitchedAllTimeVar();
+		return "Success";
 	},
 
 	clearHistory: function(){
 		TabulationHandler.clearHistory();
+		return "Success";
+	},
+
+	test: function(){
+		return "Hello";
 	}
 };
 
+var components = [TabulationHandler];
 
+if ("generateNSGetFactory" in XPCOMUtils)
+  var NSGetFactory = XPCOMUtils.generateNSGetFactory(components);  // Firefox 4.0 and higher
+else
+  var NSGetModule = XPCOMUtils.generateNSGetModule(components);    // Firefox 3.x
+
+/*
 //Something to do with intializing the modules
 //do not know if this it needed (think so though)
-
-var components = [TabulationHandler];
-if(XPCOMUtils.generateNSGetFactory)
-	var NSGetFactory = XPCOMUtils.generateNSGetFactory(components);
-else
- 	var NSGetModule = XPCOMUtils.generateNSGetModule(components);
 
 TabulationHandler.makePrefObserver = {
 
@@ -110,9 +104,9 @@ TabulationHandler.makePrefObserver = {
 //Here we probably want to run all the getter methods
 //Do we even need getter methods?
 
-/* For utilization of io.js, make sure this file loads AFTER IO.JS
- * IS LOADED IN THE PREFERENCES PANE
- */
+// For utilization of io.js, make sure this file loads AFTER IO.JS
+ //IS LOADED IN THE PREFERENCES PANE
+ 
 TabulationHandler.clearHistory = function(){
 	//Find and delete the json file that stores our tab data
 	//I AM U-571. DESTROY ME!
@@ -127,10 +121,10 @@ TabulationHandler.setOpenTabsEveryTime = function(){
 	this.prefs.setBoolPref("open_tabs_every_time", !(this.open_tabs_every_time));
 }
 
-/* THESE WILL POSSIBLY BE IMPLEMENTED LATER, DO NOT LOOK BELOW
- * THIS LINE FOR THE MOMENT
--------------------------------------------------------------------
-*/
+// THESE WILL POSSIBLY BE IMPLEMENTED LATER, DO NOT LOOK BELOW
+// THIS LINE FOR THE MOMENT
+//-------------------------------------------------------------------
+//
 
 //TabulationHandler.getShowOpenAllTimeVar = function(){
 //
@@ -155,3 +149,4 @@ TabulationHandler.setShowClosedAllTimeVar = function(){
 TabulationHandler.setShowSwitchedAllTimeVar = function(){
 
 }
+*/

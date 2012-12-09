@@ -1,21 +1,15 @@
+
+
 #include "nsISupports.idl"
 
 [scriptable, uuid(5d2f9400-41c8-11e2-a25f-0800200c9a66)]
-interface nsITabulation : nsISupports
+interface nsITabulationHandler : nsISupports
 {
 
-  //int open_tabs_every_time;
-  //int show_open_all_time;
-  //int show_closed_all_time;
-  //int show_switched_all_time;
-
-  void setOpenTabsEveryTime();
-
-  void setShowOpenAllTime();
-
-  void setShowClosedAllTime();
-
-  void setShowSwitchedAllTime();
-
-  void clearHistory();
+  string setOpenTabsEveryTime();
+  string setShowOpenAllTime();
+  string setShowClosedAllTime();
+  string setShowSwitchedAllTime();
+  string clearHistory();
+  string test(); 
 };  
