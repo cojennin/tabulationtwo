@@ -21,38 +21,23 @@ TabulationHandler.prototype = {
 	classDescription: "Tabulation handler XPCOM Component",
 
 	classID: Components.ID("{5d2f9400-41c8-11e2-a25f-0800200c9a66}"),
-	contractID: "@mozilla.org/TabulationHandler;1",
+	contractID: "@tabulationteam.org/TabulationHandler;1",
 
 	QueryInterface: XPCOMUtils.generateQI([Components.interfaces.nsITabulationHandler, 
 											Components.interfaces.nsISupports]),
-
-	getOpenTabsEveryTime: function(){
-		TabulationHandler.getOpenTabsEveryTime();
-	},
 
 	setOpenTabsEveryTime: function(){
 		TabulationHandler.setOpenTabsEveryTime();
 	},
 
-	getShowOpenAllTime: function(){
-		TabulationHandler.getShowOpenAllTimeVar();
-	},
-
 	setShowOpenAllTime: function(){
 		TabulationHandler.getShowOpenAllTimeVar();
-	},
-
-	getShowClosedAllTime: function(){
-		TabulationHandler.getShowClosedAllTimeVar();
-	},
+	},	
 
 	setShowClosedAllTime: function(){
 		TabulationHandler.setShowClosedAllTimeVar();
 	},
 
-	getShowSwitchedAllTime: function(){
-		TabulationHandler.getShowSwitchedAllTimeVar();
-	},
 
 	setShowSwitchedAllTime: function(){
 		TabulationHandler.setShowSwitchedAllTimeVar();
@@ -60,6 +45,10 @@ TabulationHandler.prototype = {
 
 	clearHistory: function(){
 		TabulationHandler.clearHistory();
+	}
+
+	test: function(){
+		alert("hello");
 	}
 };
 

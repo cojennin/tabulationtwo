@@ -9,6 +9,8 @@ interface nsITabulation : nsISupports
   int show_closed_all_time;
   int show_switched_all_time;
 
+  void test();
+
   void setOpenTabsEveryTime();
 
   void setShowOpenAllTime();
