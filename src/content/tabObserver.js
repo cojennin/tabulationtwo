@@ -1,4 +1,3 @@
-
 var tab_observer;
 
 if(typeof tab_observer == "undefined"){

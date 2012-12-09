@@ -1,13 +1,10 @@
+
 try {
-        var tabulationComponent = Components.classes['@tabulationteam.org/TabulationHandler;1']
-                                    .createInstance(Components.interfaces.nsITabulation);
-
-
-        tabulationComponent.test();
-        
-        window.addEventListener("load", function(e) { tabulationComponent.makePrefObserver.startup(); }, false);
-		window.addEventListener("unload", function(e) { tabulationComponent.makePrefObserver.shutdown(); }, false);
+    var testComponent = Components.classes['@tabulationteam.org/tabulationhandler;1']
+                                   .createInstance(Components.interfaces.nsITabulationHandler);
+ 
+    alert(testComponent.test());
 
 } catch (anError) {
-        dump("ERROR: " + anError);
+        alert(anError);
 }
