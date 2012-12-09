@@ -168,62 +168,13 @@ function instantiateTabListManager(){
 			catch(e){
 				json_all_tabs = {};
 			}
-		}
-		catch(e){
-			alert("could not find array");
-		}
-	},
-	addLinkToList: function(){
-		//Check if anything is in the input field
-		var link_to_add = document.getElementById('tabulation-link-to-add');
-	    var str=link_to_add;
-	   // if ((str.replace(/[^A-Z]/gi, "").length)>0);
-		this.list_of_links.appendItem(link_to_add.value, link_to_add.value);
-		link_to_add.value = "";
-	  //  }
-	},
-	removeLinkFromList: function(){
-		var count = this.list_of_links.selectedCount;
-		while (count--){
-			var item = this.list_of_links.selectedItems[0];
-		    this.list_of_links.removeItemAt(this.list_of_links.getIndexOfItem(item));
-		}
-	},
-	addAllLinksFromOpenBrowsers: function(){
-		var curr_browser = mainDocWindow.gBrowser;
-		var num = curr_browser.browsers.length;
-	  	for (var i = 0; i < num; i++) {
-	    	var b_urls = curr_browser.getBrowserAtIndex(i);
-	    	try {
-	      		//Loop through all open windows and push them to this array
-	      		this.list_of_links.appendItem(b_urls.currentURI.spec, b_urls.currentURI.spec);
-	    	} catch(e) {
-	      		Components.utils.reportError(e);
-	    	}
-	  	}
-	},
-	saveAllLinksInList: function(){
-		var curr_browser = mainDocWindow.gBrowser;
-		var curr_url = curr_browser.contentDocument.documentURI;
-		var count = this.list_of_links.itemCount;
-		//Storge json like objects in local storage with the key being
-		//the url they're stored under.
-		
-		var all_tabs = tabulation_flat_table.readFromFile("tabulation_tab_store.json");
-		var json_all_tabs;
-		try{
-			json_all_tabs = JSON.parse(all_tabs);
-		}
-		catch(e){
-			json_all_tabs = {};
-		}
 
 			//Doesn't matter if it exists, always set our array to 0
 			//That way, it can always recommit correctly
 			json_all_tabs[curr_url] = [];
 
 			for(var i = 0; i < count; i++){
-				alert(this.list_of_links.getItemAtIndex(i).value);
+				//alert(this.list_of_links.getItemAtIndex(i).value);
 				json_all_tabs[curr_url][i] = this.list_of_links.getItemAtIndex(i).value;
 			}
 

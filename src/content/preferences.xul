@@ -1,22 +1,17 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/global.css"?>
-
-          <overlay id="tabulation-preferences-overlay"
-                   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-
-            <prefwindow id="tabularity-browser-preferences">
-              <prefpane id="tabularity-browser-preferences" label="tabularityPane;" 
-                        onpaneload="populateSchedulesList()" 
-			image="chrome://tabulationtwo/content/images/tab.png">
-		<preferences />
-                <preference id="perSession"
-                   name="extensions.tabulation.defaultHomepage"
-		   type="bool"/>
-                </preferences>
-		<radiogroup>
-		  <radio preference="perSession" id="session" label="Open tabs once per session" accesskey="S" selected="true"/>
-		  <radio preference="perSession" id="instance" label="Open tabs every tab instance"  accesskey="I"/>
-		</radiogroup>
-              </prefpane>
-            </prefwindow>
-         </overlay>
+  <prefwindow id="tabularity-browser-preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    <prefpane id="tabularity-browser-preferences-session" label="Session info">
+  		<hbox>
+        <radiogroup>
+          <radio preference="perSession" id="session" label="Open tabs once per session" accesskey="S" selected="true"/>
+    		  <radio preference="perSession" id="instance" label="Open tabs every tab instance"  accesskey="I"/>
+    		</radiogroup>
+      </hbox>
+    </prefpane>
+    <prefpane id="tabularity-browser-preferences-history" label="Clear history">
+      <hbox>
+        <button id="tabulation-clear-history" label="Clear Tabulation history" />
+      </hbox>
+    </prefpane>
+  </prefwindow>
