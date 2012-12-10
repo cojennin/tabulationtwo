@@ -169,17 +169,21 @@ function instantiateTabListManager(){
 			catch(e){
 				json_all_tabs = {};
 			}
+                        try{
+			  //Doesn't matter if it exists, always set our array to 0
+			  //That way, it can always recommit correctly
+			  json_all_tabs[curr_url] = [];
 
-			//Doesn't matter if it exists, always set our array to 0
-			//That way, it can always recommit correctly
-			json_all_tabs[curr_url] = [];
+			  for(var i = 0; i < count; i++){
+			    //alert(this.list_of_links.getItemAtIndex(i).value);
+			    json_all_tabs[curr_url][i] = this.list_of_links.getItemAtIndex(i).value;
+			  }
 
-			for(var i = 0; i < count; i++){
-				//alert(this.list_of_links.getItemAtIndex(i).value);
-				json_all_tabs[curr_url][i] = this.list_of_links.getItemAtIndex(i).value;
-			}
-
-			tabulation_flat_table.writeToFile("tabulation_tab_store.json", JSON.stringify(json_all_tabs));
+			  tabulation_flat_table.writeToFile("tabulation_tab_store.json", JSON.stringify(json_all_tabs));
+                          alert("Saved tabs");
+                      } catch(e){
+                          alert("There was a problem saving down your file");
+                      }
 		}
 	}
 

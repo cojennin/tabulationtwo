@@ -2,7 +2,6 @@
 <?xml-stylesheet href="chrome://global/skin/global.css"?>
   <prefwindow id="tabularity-browser-preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
     <prefpane id="tabularity-browser-preferences-session" label="Session info">
-  		<hbox>
         <preferences>
             <preference id="open-all-tabs" 
                                 name="extensions.tabulation.open_tabs_every_time" 
@@ -13,11 +12,11 @@
     		  <radio preference="perSession" id="instance" label="Open tabs every tab instance"  accesskey="I"/>
     		</radiogroup>-->
       <!-- Radio Button example (this example would be stored as a boolean) -->
+        <hbox>
         <radiogroup>
           <radio value="false" id="tabulation-once" label="Open tabs once per session" preference="open-all-tabs"/>
           <radio value="true" id="tabulation-every" label="Open tabs every tab instance" preference="open-all-tabs"/>
         </radiogroup>
-
       </hbox>
     </prefpane>
     <prefpane id="tabularity-browser-preferences-history" label="Clear history">
@@ -27,5 +26,24 @@
     </prefpane>
     <script src="chrome://tabularity/content/io.js"></script>
     <script src="chrome://tabularity/content/tabulationSQL.js"></script>
-   <script src="chrome://tabularity/content/tabulationPreferences.js"></script>
+    <script src="chrome://tabularity/content/tabulationPreferences.js"></script>
+      <hbox>
+	<button id="close" label="Finish" oncommand="closePref()"/>
+      </hbox>
+    <script type="text/javascript">
+       var osString = Components.classes["@mozilla.org/xre/app-info;1"]  
+                   .getService(Components.interfaces.nsIXULRuntime).OS; 
+
+      if(osString == "Darwin"){
+        var close_but = document.getElementByID("close");
+        close_but.setAttribute("display", "block");
+      } else {
+        var close_but = document.getElementByID("close");
+        close_but.setAttribute("display", "hidden");
+      }
+
+      function closePref(){
+        window.close();
+      }
+    </script>
   </prefwindow>

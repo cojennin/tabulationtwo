@@ -14,7 +14,9 @@ var TabPreferences = {
 	},
 	
 	// Clean up after ourselves and save the prefs
-	
+    close: function(){
+	this.window.close();
+    }
 	shutdown: function()
 	{
 		this.prefs.removeObserver("", this);

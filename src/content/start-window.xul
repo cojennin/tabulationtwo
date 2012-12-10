@@ -6,7 +6,7 @@
 
   <!--<script src="file:///home/comradefuzz/mozilla-release/obj-ff-dbg/extensions/Tabulation/src/content/test-script.js"></script>-->
   <menubar id="main-menubar">
-    <menu id="tabularity-menu" label="Tabularity"
+    <menu id="tabularity-menu" label="Tabulation"
     insertafter="helpMenu">
       <menupopup>
         <menuitem id="tabularity-menu-item"
@@ -22,7 +22,7 @@
   </menubar>
 
   <vbox id="appmenuSecondaryPane">
-    <menu id="tabularity-menu-2" label="Tabularity"
+    <menu id="tabularity-menu-2" label="Tabulation"
       insertafter="appmenu_addons">
       <menupopup>
          <menuitem id="tabularity-menu-item"
@@ -43,7 +43,7 @@
                  type="checkbox"
                  group="sidebar"
                  sidebarurl="chrome://tabularity/content/tab-window.xul"
-                 sidebartitle="Tabularity"
+                 sidebartitle="Tabulation"
                  oncommand="toggleSidebar('viewTabularitySidebar');" />
   </broadcasterset>
 

@@ -1,4 +1,3 @@
-
 try {
      var testComponent = Components.classes['@tabulationteam.org/tabulationhandler;1']
                                    .createInstance(Components.interfaces.nsITabulationHandler);

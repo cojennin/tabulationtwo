@@ -7,7 +7,7 @@ interface nsITabulationHandler : nsISupports
 {
   bool getWhenToOpenTabs();
 
-
+  string setOpenTabsEveryTime();
   string setShowOpenAllTime();
   string setShowClosedAllTime();
   string setShowSwitchedAllTime();

@@ -15,21 +15,27 @@
                 <div class="tabulation-content-block">
                     <p>Number of tabs currently open: <span id="number-of-tabs-currently-open"></span></p>
                 </div>
-                <div class="tabulation-content-block">
+                <vbox style="margin-bottom:6px;margin-top:6px">
                     <h5 class="block-me totals">Total tabs opened</h5>
-                    <p class="block-me">This session: <span id="num-times-tabs-opened-session"></span></p>
-                    All time: <span id="num-times-tabs-opened-alltime"></span>
-                </div>
-                <div class="tabulation-content-block">
+                    <vbox style="margin-top:3px;margin-left:4px;">
+                      This session: <span id="num-times-tabs-opened-session"></span>
+                    <!--All time: <span id="num-times-tabs-opened-alltime"></span>-->
+                    </vbox>
+                </vbox>
+                <vbox style="margin-bottom:6px;margin-top:6px">
                     <h5 class="block-me totals">Total number of times tabs switched</h5>
+                    <vbox style="margin-top:3px;margin-left:4px">
                      <p class="block-me">This session: <span id="num-times-tabs-switched-session"></span></p>
-                     All time: <span id="num-times-tabs-switched-alltime"></span>
-                </div>
-                <div class="tabulation-content-block">
+                     <!--All time: <span id="num-times-tabs-switched-alltime"></span>-->
+                    </vbox>
+                </vbox>
+                <vbox style="margin-bottom:6px;margin-top:6px">
                     <h5 class="block-me totals">Total tabs closed</h5>
-                     <p class="block-me">This session: <span id="num-times-tabs-closed-session"></span></p>
-                     All time: <span id="num-times-tabs-closed-alltime"></span>
-                </div>
+                     <vbox style="margin-top:3px;margin-left:4px">
+                      <p class="block-me">This session: <span id="num-times-tabs-closed-session"></span></p>
+                      <!--All time: <span id="num-times-tabs-closed-alltime"></span>-->
+                    </vbox>
+                </vbox>
 
                 <p style="margin-top:4px">The next time this page is loaded, open the following tabs: </p>
                 <listbox id="tabulaton-link-list" />
