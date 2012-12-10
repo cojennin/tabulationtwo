@@ -1,4 +1,5 @@
 
+//Reference to main window
 var mainDocWindow =  window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
         	.getInterface(Components.interfaces.nsIWebNavigation)
             .QueryInterface(Components.interfaces.nsIDocShellTreeItem)
@@ -8,6 +9,7 @@ var mainDocWindow =  window.QueryInterface(Components.interfaces.nsIInterfaceReq
 
 var global_check = 0;
 
+        //Control sidbar information
 	function TabulationTabListener(mainWindow){
 		//Access gBrowser from within our sidebar
 			this.tabMainWindow = mainWindow;
